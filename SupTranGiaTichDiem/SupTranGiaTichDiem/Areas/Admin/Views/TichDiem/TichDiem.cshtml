@@ -1,0 +1,366 @@
+﻿@*
+    ...
+*@
+@model  IEnumerable<SupTranGiaTichDiem.Models.Account>
+@{
+    Layout = "~/Areas/Admin/Views/Shared/Layout.cshtml";
+    ViewBag.Title = "TichDiem";
+    ViewBag.active = 1;
+
+
+}
+
+
+<div class="content-wrapper">
+
+    <div class="container-xxl flex-grow-1 container-p-y">
+        <div class="row pb-3">
+            <div class="d-flex mb-2 text-light">
+                <div class="p-2">
+                    <button type="submit" class="btn btn-warning" data-bs-toggle="modal"
+                            data-bs-target="#modalCenter">
+                        <span class="tf-icons bx bx-plus-medical"></span>&nbsp;  Tích điểm nhanh
+                    </button>
+                </div>
+
+
+                <div class="ms-auto p-2">
+                    <select id="sortOptions" class="form-select" aria-label="Default select example">
+                        <option selected disabled>Mặc định</option>
+                        <option value="1">Từ thấp đến cao</option>
+                        <option value="2">Từ cao đến thấp</option>
+                    </select>
+                </div>
+
+            </div>
+        </div>
+
+
+        <div class="card">
+
+            <div class="pt-4 card-header col-md-4">
+                <div class="input-group">
+                    <input type="search" class="form-control " placeholder="Search" aria-label="Search" aria-describedby="search-addon" />
+                    <button type="button" class="btn btn-outline-primary" data-mdb-ripple-init>Tìm kiếm</button>
+                </div>
+            </div>
+            <div class="table-responsive text-nowrap card-body">
+                <table class="table">
+                    <thead>
+                        <tr>
+                            <th>ID</th>
+                            <th>Số điện thoại</th>
+                            <th>Họ và tên</th>
+                            <th>Điểm</th>
+                            <th>Trạng thái</th>
+                            <th>Tích Điểm</th>
+                        </tr>
+                    </thead>
+                    <tbody class="table-border-bottom-0">
+
+
+                        @foreach (var item in Model)
+                        {
+                            <tr>
+                                <td>@item.acc_id</td>
+                                <td>@item.phone</td>
+                                <td>@item.fullname</td>
+                                <td>@item.Point</td>
+                                <td>
+                                    @if (item.status == true)
+                                    {
+                                        <span class="badge bg-label-success me-1">Đang hoạt động</span>
+                                    }
+                                    else
+                                    {
+                                        <span class="badge bg-label-danger me-1">Dừng hoạt động</span>
+                                    }
+                                </td>
+                                <td>
+                                    <button type="button" class="btn  btn-icon btn-warning btn-edit" data-bs-toggle="modal"
+                                            data-bs-target="#modalUpdate">
+                                        <span class="tf-icons "><i class='bx bx-edit'></i></span>
+                                    </button>
+
+                                </td>
+                            </tr>
+                        }
+
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+        <div class="demo-inline-spacing ">
+            <!-- Basic Pagination -->
+            <nav aria-label="Page navigation ">
+                <ul class="pagination justify-content-center align-items-center">
+                    <li class="page-item first">
+                        <a class="page-link" href="javascript:void(0);">
+                            <i class="tf-icon bx bx-chevrons-left"></i>
+                        </a>
+                    </li>
+                    <li class="page-item prev">
+                        <a class="page-link" href="javascript:void(0);">
+                            <i class="tf-icon bx bx-chevron-left"></i>
+                        </a>
+                    </li>
+                    <li class="page-item">
+                        <a class="page-link" href="javascript:void(0);">1</a>
+                    </li>
+                    <li class="page-item">
+                        <a class="page-link" href="javascript:void(0);">2</a>
+                    </li>
+                    <li class="page-item active ">
+                        <a class="page-link bg-warning" href="javascript:void(0);">3</a>
+                    </li>
+                    <li class="page-item">
+                        <a class="page-link" href="javascript:void(0);">4</a>
+                    </li>
+                    <li class="page-item">
+                        <a class="page-link" href="javascript:void(0);">5</a>
+                    </li>
+                    <li class="page-item next">
+                        <a class="page-link" href="javascript:void(0);">
+                            <i class="tf-icon bx bx-chevron-right"></i>
+                        </a>
+                    </li>
+                    <li class="page-item last">
+                        <a class="page-link" href="javascript:void(0);">
+                            <i class="tf-icon bx bx-chevrons-right"></i>
+                        </a>
+                    </li>
+                </ul>
+            </nav>
+            <!--/ Basic Pagination -->
+        </div>
+        <!--/ Responsive Table -->
+    </div>
+
+
+    <div class="modal fade" id="modalCenter" tabindex="0" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered " role="document">
+
+            @using (Html.BeginForm("TichDiem", "TichDiem", FormMethod.Post))
+            {
+                @Html.AntiForgeryToken()
+
+                <div class="modal-content">
+                    <div class="modal-header bg-warning ">
+                        <h4 id="modalCenterTitle"> <b class="text-dark">Tạo nhanh tài khoản tích điểm</b></h4>
+                        <button type="button"
+                                class="btn-close"
+                                data-bs-dismiss="modal"
+                                aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                        <div class="row">
+                            <div class="col-12 mb-3">
+                                <label for="nameWithTitle" class="form-label">Số điện thoại</label>
+                                <input type="text"
+                                       id="nameWithTitle"
+                                       class="form-control"
+                                       placeholder="Nhập số điện thoại"
+                                       name="phone"
+                                       pattern="^\d{10,11}$"
+                                       value="@ViewBag.Account1.phone"
+                                       
+                                       required
+
+                                       />
+                            </div>
+                            <div class="col-12 mb-3">
+                                <div class="row ">
+                                    <label for="nameWithTitle" class="form-label">Mật khẩu</label>
+                                    <div class="col-10">
+                                        <input type="password"
+                                               id="password"
+                                               name="password"
+                                               class="form-control"
+                                               placeholder="Nhập mật khẩu"
+                                               minlength="6"
+                                               maxlength="20"
+                                               value="@ViewBag.Account1.password"
+                                               required>
+                                    </div>
+                                    <div class="col-2">
+                                        <button class="btn btn-outline-secondary" type="button" id="togglePassword">
+                                            <i class="bi bi-eye"></i>
+                                        </button>
+                                    </div>
+                                </div>
+
+                            </div>
+                            <div class="col-12 mb-3">
+                                <label for="diem" class="form-label">Điểm</label>
+                                <input type="number"
+                                       id="diem"
+                                       class="form-control"
+                                       placeholder="Nhập điểm"
+                                       name="Point"
+                                       value="@ViewBag.Account1.Point 0"
+                                       min="0"
+                                         />
+                            </div>
+
+                        </div>
+
+                        <div class="col mt-3">
+                            <h6> Vai trò</h6>
+                            <div class="form-check form-check-inline">
+                                <input class="form-check-input" type="radio" name="role" id="inlineRadio1" value="KH" checked />
+                                <label class="form-check-label" for="inlineRadio1">Khách hàng</label>
+                            </div>
+
+                            <div class="form-check form-check-inline">
+                                <input class="form-check-input" type="radio" name="role" id="inlineRadio2" value="AD" disabled />
+                                <label class="form-check-label" for="inlineRadio2">Admin</label>
+                            </div>
+
+
+                        </div>
+                        <div class="mt-3">
+                            <label for="language" class="form-label">Khu vực</label>
+                            <select id="language" name="Branch" class="select2 form-select">
+                                <option value="" disabled>Chon khu vực</option>
+                                <option value="1">Cần Thơ</option>
+                                <option value="2">Vĩnh Long</option>
+
+                            </select>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal">
+                            Thoát
+                        </button>
+                        <button type="submit" class="btn btn-warning create-btn">Tạo nhanh</button>
+                    </div>
+                </div>
+            }
+        </div>
+    </div>
+
+    <!-- Update account-->
+    <div class="modal fade" id="modalUpdate" tabindex="-1" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered" role="document">
+            @using (Html.BeginForm("CapNhat", "TichDiem", FormMethod.Post))
+            {
+                @Html.AntiForgeryToken()
+                <div class="modal-content">
+                    <div class="modal-header bg-warning">
+                        <h4 class="text-dark" id="modalUpdatetitle"><b>Tích điểm</b></h4>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                        <div class="row">
+                            <input name="acc_id" id="accID" type="hidden" value="" />
+                            <div class="col-12 mb-3">
+                                <label for="phone" class="form-label">Số điện thoại</label>
+                                <input type="text" id="phone" class="form-control" placeholder="Nhập số điện thoại" name="phone" value="" readonly />
+                            </div>
+                            <div class="col-12 mb-3">
+                                <label for="fullname" class="form-label">Họ và tên</label>
+                                <input type="text" id="fullname" class="form-control" placeholder="Nhập Họ và tên" readonly />
+                            </div>
+                            <div class="col-12 mb-3">
+                                <label for="diemm" class="form-label">Điểm</label>
+                                <input type="number" id="diemm" name="Point" value="0" class="form-control" placeholder="Điểm" readonly />
+                            </div>
+                            <div class="col-12 mb-3">
+                                <label for="diem_bonus" class="form-label">Điểm cộng</label>
+                                <input type="number" name="Point_Bonus" value="0" class="form-control" placeholder="Điểm" />
+                            </div>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal">Thoát</button>
+                        <button type="submit" class="btn btn-warning">Cập nhật</button>
+                    </div>
+                </div>
+            }
+        </div>
+    </div>
+
+    <div class="content-backdrop fade"></div>
+
+    <!-- Content wrapper -->
+    @if (!string.IsNullOrEmpty(Request.QueryString["message"]))
+    {
+        <div class="alert alert-info">
+            @Request.QueryString["message"]
+        </div>
+    }
+</div>
+
+<script>
+    document.getElementById('sortOptions').onchange = function () {
+        var selectedValue = this.value;
+        switch (selectedValue) {
+            case '0':
+                window.location.href = 'TichDiem';
+            case '1':
+                window.location.href = 'TichDiemThapCao';
+                break;
+            case '2':
+                window.location.href = 'TichDiemCaoThap';
+                break;
+            default:
+                window.location.href = 'TichDiem';
+                break;
+        }
+    };
+</script>
+
+
+<!----------------------------------------------------------------------------------------------------->
+<!----------------------------------------------------------------------------------------------------->
+<!----------------------------------------------------------------------------------------------------->
+ 
+
+<!----------------------------------------------------------------------------------------------------->
+<!----------------------------------------------------------------------------------------------------->
+<!----------------------------------------------------------------------------------------------------->
+<!---->
+ 
+<script>
+
+    $(document).ready(function () {
+        // Thêm trình xử lý sự kiện click cho tất cả nút chỉnh sửa (.btn-edit)
+        $('.btn-edit').click(function (event) {
+            console.log("edit")
+
+            // Lấy dữ liệu của hàng hiện tại (giả sử nó nằm trong phần tử 'tr' cha)
+            var rowData = $(this).closest('tr').find('td');
+
+            // Trích xuất dữ liệu liên quan từ hàng (giả sử các chỉ mục cột cụ thể)
+            var accID = rowData.eq(0).text(); // Mã tài khoản (giả sử nó ở cột đầu tiên)
+            var phone = rowData.eq(1).text();
+            var fullname = rowData.eq(2).text();
+            var Point = rowData.eq(3).text();
+            // Điền dữ liệu đã trích xuất vào các phần tử biểu mẫu modal
+            $('#accID').val(accID);
+            $('#phone').val(phone);
+            $('#fullname').val(fullname);
+            $('#diemm').val(Point)
+
+            // Mở modal theo lập trình
+            $('#modalUpdate').modal('show');
+        });
+    });
+
+</script>
+<!--Hiện mật khẩu-->
+<script>
+    document.getElementById('togglePassword').addEventListener('click', function (e) {
+        const passwordInput = document.getElementById('password');
+        const icon = this.querySelector('i');
+
+        // Toggle the type attribute
+        const type = passwordInput.getAttribute('type') === 'password' ? 'text' : 'password';
+        passwordInput.setAttribute('type', type);
+
+        // Toggle the icon
+        icon.classList.toggle('bi-eye');
+        icon.classList.toggle('bi-eye-slash');
+    });
+</script>

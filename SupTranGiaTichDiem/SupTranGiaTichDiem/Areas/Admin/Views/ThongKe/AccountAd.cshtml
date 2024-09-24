@@ -1,0 +1,524 @@
+﻿@{
+    ViewBag.Title = "Thống kê";
+    Layout = "~/Areas/Admin/Views/Shared/Layout.cshtml";
+    ViewBag.active = 0;
+    var accountsByBranch = ViewBag.AccountsByBranch as List<SupTranGiaTichDiem.Models.ViewModels.BranchAccountCountViewModel>;
+    var topRedeemedRewards = ViewBag.TopRedeemedRewards as List<SupTranGiaTichDiem.Models.ViewModels.RewardRedemptionsViewModel>;
+    var topCustomersByPoints = ViewBag.TopCustomersByPoints as List<SupTranGiaTichDiem.Models.ViewModels.AccountPointsViewModel>;
+    var topRedemptionsByAccount = ViewBag.TopRedemptionsByAccount as List<SupTranGiaTichDiem.Models.ViewModels.AccountRedemptionsViewModel>;
+
+
+}
+@using Newtonsoft.Json
+@using SupTranGiaTichDiem.Models.ViewModels
+@model PagedList.IPagedList<SupTranGiaTichDiem.Models.ViewModels.AccountPointsViewModel>
+@using PagedList.Mvc;
+<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css"
+      rel="stylesheet" />
+<!-- Google Fonts -->
+<link href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700&display=swap"
+      rel="stylesheet" />
+<!-- MDB -->
+<link href="https://cdnjs.cloudflare.com/ajax/libs/mdb-ui-kit/7.3.2/mdb.min.css"
+      rel="stylesheet" />
+<div class="content-wrapper">
+    <div class="container-xxl flex-grow-1 container-p-y">
+        <div class="row">
+            <div class="col-lg-2 mb-4 order-0">
+                <div class="card bg-warning text-light">
+                    <div class="card-body">
+                        <div class="card-title d-flex align-items-start justify-content-between">
+
+                        </div>
+                        <span class=""> KHÁCH HÀNG</span>
+                        <h6>  <span class="badge badge-warning">Tất cả</span></h6>
+                        <h3 class="card-title text-nowrap mb-1">+@ViewBag.TotalAccounts</h3>
+
+                    </div>
+                </div>
+
+            </div>
+            @foreach (var item in accountsByBranch)
+            {
+                <div class="col-lg-2 mb-4 order-0">
+                    <div class="card  bg-success text-light">
+                        <div class="card-body">
+                            <div class="card-title d-flex ">
+
+                            </div>
+
+
+
+                            <span class=" ">KHÁCH HÀNG  </span>
+                            <h6>  <span class="badge badge-success">@item.BranchName</span></h6>
+
+                            <h3 class="card-title text-nowrap mb-1">+@item.AccountCount</h3>
+
+                        </div>
+                    </div>
+
+                </div>
+            }
+            <div class="col-lg-2 mb-4 order-0">
+                <div class="card bg-gray text-light">
+                    <div class="card-body">
+                        <div class="card-title d-flex align-items-start justify-content-between">
+
+                        </div>
+                        <span class="">SẢN PHẨM</span>
+                        <h6>  <span class="badge badge-primary">Tất cả</span></h6>
+                        <h3 class="card-title text-nowrap mb-1">+@ViewBag.TotalProducts</h3>
+
+                    </div>
+                </div>
+
+            </div>
+            <div class="col-lg-4 col-md-4 order-1">
+                
+            </div>
+            <!-- Total Revenue -->
+            <div class="col-12 col-lg-4 order-2 order-md-3 order-lg-2 mb-4">
+
+                <div class="card">
+                    <div class="p-4">
+
+                        <form id="monthYearForm">
+                            <div class="d-flex p-2">
+                                <div class="d-inline">
+                                    <label for="monthOnly" class="label label-warning">Chọn tháng -</label>
+                                    <select id="monthOnly" name="month" class="form-select" aria-label="Default select example"></select>
+                                </div>
+                                <div class="d-inline">
+                                    <label for="yearOnly">- Chọn năm:</label>
+                                    <select id="yearOnly" name="year" class="form-select" aria-label="Default select example"></select>
+                                </div>
+                            </div>
+                        </form>
+
+
+                        <canvas id="rewardsByMonthChart"></canvas>
+
+                    </div>
+                </div>
+
+
+
+            </div>
+            <div class="col-12 col-lg-4 order-2 order-md-3 order-lg-2 mb-4">
+
+                <div class="card">
+                    <div class="p-4">
+                      
+
+                        <!-- Form chọn tháng và năm -->
+                        <form id="monthYearForm">
+                            <div>
+                                <label for="monthOnly">Chọn tháng:</label>
+                                <select id="monthOnly" name="month"></select>
+
+                                <label for="yearOnly">Chọn năm:</label>
+                                <select id="yearOnly" name="year"></select>
+                            </div>
+                        </form>
+
+
+                        <canvas id="chart-bar"></canvas>
+
+                    </div>
+                </div>
+
+
+
+            </div>
+
+            <!--/ Total Revenue -->
+            <div class="col-12 col-md-8 col-lg-4 order-3 order-md-2">
+                <div class="row">
+
+
+                    <div class="col-12 mb-4">
+                        <div class="card">
+                            <h3 class="text-center card-header">DANH SÁCH TOP</h3>
+                            <!-- Tabs navs -->
+                            <ul class="nav nav-tabs mb-3" id="ex1" role="tablist">
+                                <li class="nav-item" role="presentation">
+                                    <a data-mdb-tab-init
+                                       class="nav-link active"
+                                       id="ex1-tab-1"
+                                       href="#ex1-tabs-1"
+                                       role="tab"
+                                       aria-controls="ex1-tabs-1"
+                                       aria-selected="true">Phần thưởng đổi nhiều</a>
+                                </li>
+                                <li class="nav-item" role="presentation">
+                                    <a data-mdb-tab-init
+                                       class="nav-link"
+                                       id="ex1-tab-2"
+                                       href="#ex1-tabs-2"
+                                       role="tab"
+                                       aria-controls="ex1-tabs-2"
+                                       aria-selected="false">Khách hàng đổi thưởng</a>
+                                </li>
+
+                            </ul>
+                            <!-- Tabs navs -->
+                            <!-- Tabs content -->
+                            <div class="tab-content" id="ex1-content">
+                                <div class="tab-pane fade show active"
+                                     id="ex1-tabs-1"
+                                     role="tabpanel"
+                                     aria-labelledby="ex1-tab-1">
+
+                                    <div class="">
+                                        <ul class="p-0 m-0">
+
+                                            @foreach (var item in topRedeemedRewards)
+                                            {
+                                                <li class="d-flex mb-4 pb-1">
+                                                    <div class="avatar flex-shrink-0 me-3">
+                                                        <img src="@Url.Content("~/img/"+item.RewardImage)" alt="" class="rounded img-fluid" />
+                                                    </div>
+                                                    <div class="d-flex w-100 flex-wrap align-items-center justify-content-between gap-2">
+                                                        <div class="me-2">
+
+                                                            <h6 class="mb-0">@item.RewardName</h6>
+                                                        </div>
+                                                        <div class="user-progress d-flex align-items-center gap-1">
+                                                            <h4 class="mb-0 "> <span class="badge badge-primary">+@item.TotalQuantityRedeemed</span> </h4>
+                                                            <span class="text-muted">Lượt</span>
+                                                        </div>
+                                                    </div>
+                                                </li>
+                                            }
+
+
+
+                                        </ul>
+                                    </div>
+                                </div>
+                                <div class="tab-pane fade" id="ex1-tabs-2" role="tabpanel" aria-labelledby="ex1-tab-2">
+
+
+                                    <ul class="p-0 m-0">
+
+                                        @foreach (var item in topRedemptionsByAccount)
+                                        {
+                                            <li class="d-flex mb-4 pb-1">
+                                                <div class="avatar flex-shrink-0 me-3">
+                                                    <img src="~/img/icons8-avatar-48.png" alt="" class="rounded img-fluid" />
+                                                </div>
+                                                <div class="d-flex w-100 flex-wrap align-items-center justify-content-between gap-2">
+                                                    <div class="me-2">
+                                                        <h6 class="mb-0 text-danger">@item.Phone</h6>
+                                                        <h6 class="mb-0">@item.FullName</h6>
+                                                    </div>
+                                                    <div class="user-progress d-flex align-items-center gap-1">
+                                                        <h4 class="mb-0 "> <span class="badge badge-primary">+@item.TotalRedemptions</span> </h4>
+                                                        <span class="text-muted">Lượt</span>
+                                                    </div>
+                                                </div>
+                                            </li>
+                                        }
+
+
+
+                                </div>
+
+                            </div>
+                            <!-- Tabs content -->
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+
+            <div class="col-12 col-md-8 col-lg-12 order-3 order-md-2">
+                <div class="card">
+                    @*@using (Html.BeginForm("AccountAd", "ThongKe", FormMethod.Get))
+        {
+            <p>
+                Tìm kiếm số điện thoại:
+                @Html.TextBox("search", ViewBag.CurrentSearch as string)
+                <input type="submit" value="Tìm kiếm" />
+            </p>
+        }*@
+
+
+                    <!-- Display Results -->
+                    <div class="col-12 col-md-8 col-lg-12 order-3 order-md-2">
+                        <div class="card">
+                            <div class="card-header d-flex align-items-center justify-content-between">
+                                <h5 class="mb-0">Khách hàng tích điểm nhiều nhất</h5>
+                            </div>
+                            <div class="table-responsive">
+                                <table class="table">
+                                    <thead>
+                                        <tr>
+                                            <th>STT</th>
+                                            <th>Tên khách hàng</th>
+                                            <th>Số điện thoại</th>
+                                            <th>Điểm tích lũy</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        @foreach (var item in Model)
+                                        {
+                                            <tr>
+                                                <td></td>
+                                                <td>@item.FullName</td>
+                                                <td>@item.Phone</td>
+                                                <td>@item.TotalPoints</td>
+                                            </tr>
+                                        }
+                                    </tbody>
+                                </table>
+
+
+                            </div>
+
+                            <nav aria-label="Page navigation example " class="mt-3">
+                                <ul class="pagination justify-content-center align-items-center">
+                                    <!-- Previous Page Link -->
+                                    <li class="page-item @(Model.HasPreviousPage ? "" : "disabled")">
+                                        <a class="page-link" href="@Url.Action("AccountAd", new { page = Model.PageNumber - 1, search = ViewBag.CurrentSearch })" aria-label="Previous">
+                                            <span aria-hidden="true">&laquo;</span>
+                                        </a>
+                                    </li>
+
+                                    <!-- Page Number Links -->
+                                    @for (var i = 1; i <= Model.PageCount; i++)
+                                    {
+                                        <li class="page-item @(Model.PageNumber == i ? "active" : "")">
+                                            <a class="page-link" href="@Url.Action("AccountAd", new { page = i, search = ViewBag.CurrentSearch })">
+                                                @i
+                                            </a>
+                                        </li>
+                                    }
+
+                                    <!-- Next Page Link -->
+                                    <li class="page-item @(Model.HasNextPage ? "" : "disabled")">
+                                        <a class="page-link" href="@Url.Action("AccountAd", new { page = Model.PageNumber + 1, search = ViewBag.CurrentSearch })" aria-label="Next">
+                                            <span aria-hidden="true">&raquo;</span>
+                                        </a>
+                                    </li>
+                                </ul>
+                            </nav>
+
+                        </div>
+
+                    </div>
+
+                   
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    <script type="text/javascript"
+            src="https://cdnjs.cloudflare.com/ajax/libs/mdb-ui-kit/7.3.2/mdb.umd.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.5.0/Chart.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script>
+        $(document).ready(function() {
+            // Function to initialize the page
+            function initializePage() {
+                // Fetch months and years and fill the dropdowns
+                $.ajax({
+                    url: '@Url.Action("GetMonthsAndYears", "ThongKe", new { area = "Admin" })',
+                    type: 'GET',
+                    success: function(data) {
+                        var months = data.Months;
+                        var years = data.Years;
+
+                        // Fill month dropdown
+                        var monthSelect = $('#monthOnly');
+                        monthSelect.empty();
+                        $.each(months, function(index, month) {
+                            monthSelect.append($('<option>', {
+                                value: month.Month,
+                                text: month.Month
+                            }));
+                        });
+
+                        // Fill year dropdowns
+                        var yearSelect = $('#yearOnly');
+                        yearSelect.empty();
+                        $.each(years, function(index, year) {
+                            yearSelect.append($('<option>', {
+                                value: year.Year,
+                                text: year.Year
+                            }));
+                        });
+
+                        // Trigger initial load based on current selection
+                        getTopRewardsByMonth();
+                        getTopRewardsByYear();
+                    }
+                });
+
+                // Bind change events for month and year dropdowns
+                $('#monthOnly, #yearOnly').change(function() {
+                    getTopRewardsByMonth();
+                    getTopRewardsByYear();
+                });
+
+                // Bind click event for reload button
+                $('#reloadChartBtn').click(function() {
+                    getTopRewardsByMonth();
+                });
+            }
+
+            // Initialize the page when the document is ready
+            initializePage();
+
+            function getTopRewardsByMonth() {
+                var month = $('#monthOnly').val();
+                var year = $('#yearOnly').val();
+                $.ajax({
+                    url: '@Url.Action("GetTopRewardsByMonth", "ThongKe", new { area = "Admin" })',
+                    type: 'POST',
+                    data: { month: month, year: year },
+                    success: function (data) {
+                        updateChart('rewardsByMonthChart', data, 'Phần thưởng được đổi nhiều nhất theo tháng');
+                    }
+                });
+            }
+
+            var myCharts = {}; // Object to store chart instances
+
+            function updateChart(chartId, data, chartTitle) {
+                var ctx = document.getElementById(chartId);
+
+                if (!ctx) {
+                    console.error('Canvas element with ID ' + chartId + ' not found.');
+                    return;
+                }
+
+                var existingChart = myCharts[chartId];
+
+                if (existingChart) {
+                    existingChart.destroy();
+                }
+
+                myCharts[chartId] = new Chart(ctx, {
+                    type: 'pie', // Set the chart type to 'pie' for pie chart
+                    data: {
+                        labels: data.map(item => item.RewardName),
+                        datasets: [{
+                            backgroundColor: ['rgba(255, 99, 132, 0.2)', 'rgba(54, 162, 235, 0.2)', 'rgba(255, 206, 86, 0.2)', 'rgba(75, 192, 192, 0.2)', 'rgba(153, 102, 255, 0.2)', 'rgba(255, 159, 64, 0.2)', 'rgba(255, 99, 132, 0.2)', 'rgba(54, 162, 235, 0.2)', 'rgba(255, 206, 86, 0.2)', 'rgba(75, 192, 192, 0.2)', 'rgba(153, 102, 255, 0.2)', 'rgba(255, 159, 64, 0.2)'],
+                            data: data.map(item => item.TotalQuantityRedeemed),
+                            borderColor: ['rgba(255, 99, 132, 1)', 'rgba(54, 162, 235, 1)', 'rgba(255, 206, 86, 1)', 'rgba(75, 192, 192, 1)', 'rgba(153, 102, 255, 1)', 'rgba(255, 159, 64, 1)', 'rgba(255, 99, 132, 1)', 'rgba(54, 162, 235, 1)', 'rgba(255, 206, 86, 1)', 'rgba(75, 192, 192, 1)', 'rgba(153, 102, 255, 1)', 'rgba(255, 159, 64, 1)'],
+                            borderWidth: 1
+                        }]
+                    },
+                    options: {
+                        responsive: true,
+                        plugins: {
+                            legend: {
+                                position: 'top',
+                            },
+                            title: {
+                                display: true,
+                                text: chartTitle
+                            }
+                        }
+                    }
+                });
+            }
+
+        });
+
+    </script>
+    <script>
+    $(document).ready(function () {
+        $.ajax({
+            url: '@Url.Action("GetAccountRegistrationsByMonth", "ThongKe")',
+            method: 'GET',
+            data: { year: 2024 },
+            success: function (data) {
+                var months = data.map(function (item) { return item.Month; });
+                var accountCounts = data.map(function (item) { return item.AccountCount; });
+
+                var ctx = document.getElementById('accountRegistrationsChart').getContext('2d');
+                var myChart = new Chart(ctx, {
+                    type: 'bar',
+                    data: {
+                        labels: months,
+                        datasets: [{
+                            label: 'Number of Accounts',
+                            data: accountCounts,
+                            backgroundColor: 'rgba(54, 162, 235, 0.6)',
+                            borderColor: 'rgba(54, 162, 235, 1)',
+                            borderWidth: 1
+                        }]
+                    },
+                    options: {
+                        scales: {
+                            yAxes: [{
+                                ticks: {
+                                    beginAtZero: true
+                                }
+                            }]
+                        }
+                    }
+                });
+            },
+            error: function (error) {
+                console.error('Error fetching data:', error);
+            }
+        });
+    });
+    </script>
+    <script>
+// Prepare the data from the Razor model
+var customers = @Html.Raw(JsonConvert.SerializeObject(topCustomersByPoints));
+var xValues = customers.map(function(customer) { return customer.FullName + " (" + customer.Phone + ")"; });
+var yValues = customers.map(function(customer) { return customer.TotalPoints; });
+
+const dataBar = {
+    type: "bar",
+    data: {
+        labels: xValues,
+        datasets: [{
+            label: "Total Points",
+            data: yValues,
+            backgroundColor: "rgba(54, 162, 235, 0.6)", // Example: light blue color
+        }],
+    },
+    options: {
+        legend: { display: false },
+        title: {
+            display: true,
+            text: "Top Customers by Points"
+        },
+        scales: {
+            y: {
+                beginAtZero: true
+            }
+        }
+    }
+};
+
+new mdb.Chart(document.getElementById("chart-bar2"), dataBar);
+    </script>
+    <script>
+        const dataBar = {
+  type: "bar",
+  data: {
+    labels: ["Monday", "Tuesday", "Wednesday", "Thursday"],
+    datasets: [{
+      label: "Traffic",
+      data: [3234, 2234, 3234, 1234],
+      backgroundColor: ["rgba(66,133,244,0.6)", "rgba(66,133,244,0.6)",
+        "rgba(66,133,244,0.6)", "rgba(66,133,244,0.6)"
+      ],
+    }, ],
+  },
+};
+
+new mdb.Chart(document.getElementById("chart-bar"), dataBar);
+    </script>
+}
+<!-- MDB -->

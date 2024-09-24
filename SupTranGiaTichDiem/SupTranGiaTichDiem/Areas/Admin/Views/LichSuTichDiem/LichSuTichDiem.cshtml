@@ -1,0 +1,91 @@
+﻿@*
+    ...
+*@
+@model  List<SupTranGiaTichDiem.Models.HistoryPointChange>
+      
+
+    @{
+        Layout = "~/Areas/Admin/Views/Shared/Layout.cshtml";
+        ViewBag.Title = "LichSuTichDiem";
+        ViewBag.active = 6;
+
+
+    }
+
+
+   
+
+        <div class="container-xxl flex-grow-1 container-p-y">
+            <div class="row pb-3">
+                <div class="d-flex mb-2 text-light">
+                     
+
+                    <div class="ms-auto p-2">
+                        <select id="sortOptions" class="form-select" aria-label="Default select example">
+                            <option selected disabled>Mặc định</option>
+                            <option value="1">Từ thấp đến cao</option>
+                            <option value="2">Từ cao đến thấp</option>
+                        </select>
+                    </div>
+
+                </div>
+            </div>
+
+
+            <div class="card">
+
+                <div class="pt-4 card-header col-md-4">
+                    <div class="input-group">
+                        <input type="search" class="form-control " placeholder="Search" aria-label="Search" aria-describedby="search-addon" />
+                        <button type="button" class="btn btn-outline-primary" data-mdb-ripple-init>Tìm kiếm</button>
+                    </div>
+                </div>
+                <div class="table-responsive text-nowrap card-body">
+                    <table class="table text-dark" style="font-size:large;padding:10px">
+                        <thead>
+                            <tr>
+                                <th>ID</th>
+                                <th>Số điện thoại</th>
+                                <th>Họ và tên</th>
+                                <th>Ngày thay đổi</th>
+                                 
+                                <th>Điểm</th>
+                                <th>ID Nhân viên</th>
+
+                            </tr>
+                        </thead>
+                        <tbody class="table-border-bottom-0 ">
+
+
+                            @foreach (var item in Model)
+                            {
+                                <tr >
+                                    <td>@item.HisID</td>
+                                    <td>@item.Phone</td>
+                                    <td>@item.FullName</td>
+                                    <td> @string.Format("{0:HH:mm:ss - dd/MM/yyyy}", item.Date) </td>
+                                     
+                                    @if (item.HisPointChange >= 0)
+                                    {
+                                        <td class="text-success">+ @item.HisPointChange</td>
+
+                                    }
+                                    else
+                                    {
+                                        <td class="text-danger">@item.HisPointChange</td>
+                                    }
+                                     
+                                    <td>@item.Acc_ID</td>
+                                     
+                                </tr>
+                            }
+
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+
+
+            <!-- Content wrapper -->
+        </div>

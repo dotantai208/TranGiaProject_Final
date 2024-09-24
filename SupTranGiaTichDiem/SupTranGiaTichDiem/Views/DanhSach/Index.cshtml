@@ -1,0 +1,400 @@
+﻿
+@{
+    ViewBag.Title = "Sản Phẩm";
+}
+
+
+<div>
+    <h1 class="mb-4"><span class="badge badge-warning">Danh mục sản phẩm</span></h1>
+    <div class="row g-4">
+        <div class="col-lg-12">
+            <div class="row g-4">
+                <div class="col-xl-3">
+                    <div class="input-group w-100 mx-auto d-flex">
+                        <div class="form-outline" data-mdb-input-init>
+                            <input id="search-input" type="search" id="form1" class="form-control " style="color: white;" />
+                            <label class="form-label" for="form1">Search</label>
+                        </div>
+                        <button id="search-button" type="button" class="btn btn-warning">
+                            <i class="fas fa-search"></i>
+                        </button>
+                    </div>
+                </div>
+                <div class="col-6"></div>
+                <div class="col-xl-3">
+                    <div class="bg-warning ps-3 py-3 rounded d-flex justify-content-between mb-4">
+                        <label for="fruits">Sắp xếp</label>
+                        <select id="fruits" name="fruitlist" class="border-0 form-select-sm bg-light me-3 w-50" form="fruitform">
+                            <option value="volvo">Mặc định</option>
+                            <option value="saab">từ thấp đến cao</option>
+                            <option value="opel">từ cao đến thấp</option>
+
+                        </select>
+                    </div>
+                </div>
+            </div>
+            <div class="row g-4">
+                <div class="col-lg-3">
+                    <div class="row g-4">
+                        <div class="col-lg-12">
+                            <div class="mb-3">
+                                <h4>Categories</h4>
+                                <ul class="list-unstyled fruite-categorie">
+                                    <li class="">
+                                        <div class="d-flex justify-content-between ">
+                                            <a href="#" style="color: aliceblue;"><i class="fas fa-apple-alt me-2"></i>Đồ ăn</a>
+                                            <span>(3)</span>
+                                        </div>
+                                    </li>
+                                    <li>
+                                        <div class="d-flex justify-content-between ">
+                                            <a href="#" style="color: aliceblue;"><i class="fas fa-apple-alt me-2"></i>Đồ uống</a>
+                                            <span>(5)</span>
+                                        </div>
+                                    </li>
+
+
+                                </ul>
+                            </div>
+                        </div>
+                        <div class="col-lg-12">
+                            <div class="mb-3">
+                                <h4 class="mb-2">Lọc theo điểm</h4>
+                                <input type="range" class="form-range w-100" id="rangeInput" name="rangeInput" min="0" max="500" value="0" oninput="amount.value=rangeInput.value">
+                                <output id="amount" name="amount" min-velue="0" max-value="500" for="rangeInput">0</output>
+                            </div>
+                        </div>
+                        <div class="col-lg-12">
+                            <div class="mb-3">
+                                <h4>Các loại súp</h4>
+                                <div class="mb-2 w-50">
+                                    <input type="radio" class="me-2" id="Categories-1" name="Categories-1" value="Beverages">
+                                    <label for="Categories-1">Truyền thống</label>
+                                </div>
+                                <div class="mb-2">
+                                    <input type="radio" class="me-2" id="Categories-2" name="Categories-1" value="Beverages">
+                                    <label for="Categories-2">hải sản</label>
+                                </div>
+                                <div class="mb-2">
+                                    <input type="radio" class="me-2" id="Categories-3" name="Categories-1" value="Beverages">
+                                    <label for="Categories-3">Bắc thảo</label>
+                                </div>
+                                <div class="mb-2">
+                                    <input type="radio" class="me-2" id="Categories-4" name="Categories-1" value="Beverages">
+                                    <label for="Categories-4">Bào ngư</label>
+                                </div>
+                                <div class="mb-2">
+                                    <input type="radio" class="me-2" id="Categories-5" name="Categories-1" value="Beverages">
+                                    <label for="Categories-5">Ốc heo</label>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-lg-12">
+                            <h4 class="mb-3">Phổ biến nhất</h4>
+                            <div class="d-flex align-items-center justify-content-start mb-3 bg-light p-2">
+                                <div class="rounded me-4" style="width: 100px; height: 100px;">
+                                    <img src="~/img/sup-15k.png" class="img-fluid rounded-2" alt="">
+                                </div>
+                                <div class="text-dark ">
+                                    <h5 class="mb-2 text-warning">Súp cua hải sản</h5>
+                                    <div class="d-flex mb-2">
+                                        Giá hiện tại: 50.000đ
+                                    </div>
+                                    <div class="d-flex mb-2">
+                                        <h5 class="fw-bold me-2">20 điểm</h5>
+
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="d-flex align-items-center justify-content-start mb-3 bg-light p-2">
+                                <div class="rounded me-4" style="width: 100px; height: 100px;">
+                                    <img src="~/img/sup-15k.png" class="img-fluid rounded-2" alt="">
+                                </div>
+                                <div class="text-dark ">
+                                    <h5 class="mb-2 text-warning">Súp cua hải sản</h5>
+                                    <div class="d-flex mb-2">
+                                        Giá hiện tại: 50.000đ
+                                    </div>
+                                    <div class="d-flex mb-2">
+                                        <h5 class="fw-bold me-2">20 điểm</h5>
+
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="d-flex align-items-center justify-content-start mb-3 bg-light p-2">
+                                <div class="rounded me-4" style="width: 100px; height: 100px;">
+                                    <img src="~/img/sup-15k.png" class="img-fluid rounded-2" alt="">
+                                </div>
+                                <div class="text-dark ">
+                                    <h5 class="mb-2 text-warning">Súp cua hải sản</h5>
+                                    <div class="d-flex mb-2">
+                                        Giá hiện tại: 50.000đ
+                                    </div>
+                                    <div class="d-flex mb-2">
+                                        <h5 class="fw-bold me-2">20 điểm</h5>
+
+                                    </div>
+                                </div>
+                            </div>
+
+
+                        </div>
+
+                    </div>
+                </div>
+                <div class="col-lg-9">
+                    <div class="row g-4 justify-content-center">
+                        <div class="col-md-6 col-lg-6 col-xl-4">
+                            <div class="post">
+                                <div class="post-img"></div>
+                                <a href="#" class="post-link">
+                                    <div class="post-img-hovered"></div>
+                                </a>
+                                <div class="post-info">
+                                    <div class="post-about">
+                                        <a href="#" class="post-cat">ĐỒ ĂN</a>
+                                        <div class="post-time">
+                                            <div class="badge bg-warning" style="font-size: 15px;">20 điểm </div>
+                                        </div>
+                                    </div>
+                                    <h1 class="heading">Súp cua hải sản</h1>
+                                    <p class="post-desc">
+                                        <button type="button" class="btn btn-outline-warning" data-mdb-ripple-init
+                                                data-mdb-ripple-color="dark">
+                                            Đổi thưởng
+                                        </button>
+                                        <button type="button" class="btn btn-warning" data-mdb-ripple-init>Xem chi tiết</button>
+                                    </p>
+
+                                    <div class="post-creator"><strong>Giá bán hiện tại:</strong> <span>50.000đ</span></div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-6 col-lg-6 col-xl-4">
+                            <div class="post">
+                                <div class="post-img"></div>
+                                <a href="#" class="post-link">
+                                    <div class="post-img-hovered"></div>
+                                </a>
+                                <div class="post-info">
+                                    <div class="post-about">
+                                        <a href="#" class="post-cat">ĐỒ ĂN</a>
+                                        <div class="post-time">
+                                            <div class="badge bg-warning" style="font-size: 15px;">20 điểm </div>
+                                        </div>
+                                    </div>
+                                    <h1 class="heading">Súp cua hải sản</h1>
+                                    <p class="post-desc">
+                                        <button type="button" class="btn btn-outline-warning" data-mdb-ripple-init
+                                                data-mdb-ripple-color="dark">
+                                            Đổi thưởng
+                                        </button>
+                                        <button type="button" class="btn btn-warning" data-mdb-ripple-init>Xem chi tiết</button>
+                                    </p>
+
+                                    <div class="post-creator"><strong>Giá bán hiện tại:</strong> <span>50.000đ</span></div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-6 col-lg-6 col-xl-4">
+                            <div class="post">
+                                <div class="post-img"></div>
+                                <a href="#" class="post-link">
+                                    <div class="post-img-hovered"></div>
+                                </a>
+                                <div class="post-info">
+                                    <div class="post-about">
+                                        <a href="#" class="post-cat">ĐỒ ĂN</a>
+                                        <div class="post-time">
+                                            <div class="badge bg-warning" style="font-size: 15px;">20 điểm </div>
+                                        </div>
+                                    </div>
+                                    <h1 class="heading">Súp cua hải sản</h1>
+                                    <p class="post-desc">
+                                        <button type="button" class="btn btn-outline-warning" data-mdb-ripple-init
+                                                data-mdb-ripple-color="dark">
+                                            Đổi thưởng
+                                        </button>
+                                        <button type="button" class="btn btn-warning" data-mdb-ripple-init>Xem chi tiết</button>
+                                    </p>
+
+                                    <div class="post-creator"><strong>Giá bán hiện tại:</strong> <span>50.000đ</span></div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-6 col-lg-6 col-xl-4">
+                            <div class="post">
+                                <div class="post-img"></div>
+                                <a href="#" class="post-link">
+                                    <div class="post-img-hovered"></div>
+                                </a>
+                                <div class="post-info">
+                                    <div class="post-about">
+                                        <a href="#" class="post-cat">ĐỒ ĂN</a>
+                                        <div class="post-time">
+                                            <div class="badge bg-warning" style="font-size: 15px;">20 điểm </div>
+                                        </div>
+                                    </div>
+                                    <h1 class="heading">Súp cua hải sản</h1>
+                                    <p class="post-desc">
+                                        <button type="button" class="btn btn-outline-warning" data-mdb-ripple-init
+                                                data-mdb-ripple-color="dark">
+                                            Đổi thưởng
+                                        </button>
+                                        <button type="button" class="btn btn-warning" data-mdb-ripple-init>Xem chi tiết</button>
+                                    </p>
+
+                                    <div class="post-creator"><strong>Giá bán hiện tại:</strong> <span>50.000đ</span></div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-6 col-lg-6 col-xl-4">
+                            <div class="post">
+                                <div class="post-img"></div>
+                                <a href="#" class="post-link">
+                                    <div class="post-img-hovered"></div>
+                                </a>
+                                <div class="post-info">
+                                    <div class="post-about">
+                                        <a href="#" class="post-cat">ĐỒ ĂN</a>
+                                        <div class="post-time">
+                                            <div class="badge bg-warning" style="font-size: 15px;">20 điểm </div>
+                                        </div>
+                                    </div>
+                                    <h1 class="heading">Súp cua hải sản</h1>
+                                    <p class="post-desc">
+                                        <button type="button" class="btn btn-outline-warning" data-mdb-ripple-init
+                                                data-mdb-ripple-color="dark">
+                                            Đổi thưởng
+                                        </button>
+                                        <button type="button" class="btn btn-warning" data-mdb-ripple-init>Xem chi tiết</button>
+                                    </p>
+
+                                    <div class="post-creator"><strong>Giá bán hiện tại:</strong> <span>50.000đ</span></div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-6 col-lg-6 col-xl-4">
+                            <div class="post">
+                                <div class="post-img"></div>
+                                <a href="#" class="post-link">
+                                    <div class="post-img-hovered"></div>
+                                </a>
+                                <div class="post-info">
+                                    <div class="post-about">
+                                        <a href="#" class="post-cat">ĐỒ ĂN</a>
+                                        <div class="post-time">
+                                            <div class="badge bg-warning" style="font-size: 15px;">20 điểm </div>
+                                        </div>
+                                    </div>
+                                    <h1 class="heading">Súp cua hải sản</h1>
+                                    <p class="post-desc">
+                                        <button type="button" class="btn btn-outline-warning" data-mdb-ripple-init
+                                                data-mdb-ripple-color="dark">
+                                            Đổi thưởng
+                                        </button>
+                                        <button type="button" class="btn btn-warning" data-mdb-ripple-init>Xem chi tiết</button>
+                                    </p>
+
+                                    <div class="post-creator"><strong>Giá bán hiện tại:</strong> <span>50.000đ</span></div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-6 col-lg-6 col-xl-4">
+                            <div class="post">
+                                <div class="post-img"></div>
+                                <a href="#" class="post-link">
+                                    <div class="post-img-hovered"></div>
+                                </a>
+                                <div class="post-info">
+                                    <div class="post-about">
+                                        <a href="#" class="post-cat">ĐỒ ĂN</a>
+                                        <div class="post-time">
+                                            <div class="badge bg-warning" style="font-size: 15px;">20 điểm </div>
+                                        </div>
+                                    </div>
+                                    <h1 class="heading">Súp cua hải sản</h1>
+                                    <p class="post-desc">
+                                        <button type="button" class="btn btn-outline-warning" data-mdb-ripple-init
+                                                data-mdb-ripple-color="dark">
+                                            Đổi thưởng
+                                        </button>
+                                        <button type="button" class="btn btn-warning" data-mdb-ripple-init>Xem chi tiết</button>
+                                    </p>
+
+                                    <div class="post-creator"><strong>Giá bán hiện tại:</strong> <span>50.000đ</span></div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-6 col-lg-6 col-xl-4">
+                            <div class="post">
+                                <div class="post-img"></div>
+                                <a href="#" class="post-link">
+                                    <div class="post-img-hovered"></div>
+                                </a>
+                                <div class="post-info">
+                                    <div class="post-about">
+                                        <a href="#" class="post-cat">ĐỒ ĂN</a>
+                                        <div class="post-time">
+                                            <div class="badge bg-warning" style="font-size: 15px;">20 điểm </div>
+                                        </div>
+                                    </div>
+                                    <h1 class="heading">Súp cua hải sản</h1>
+                                    <p class="post-desc">
+                                        <button type="button" class="btn btn-outline-warning" data-mdb-ripple-init
+                                                data-mdb-ripple-color="dark">
+                                            Đổi thưởng
+                                        </button>
+                                        <button type="button" class="btn btn-warning" data-mdb-ripple-init>Xem chi tiết</button>
+                                    </p>
+
+                                    <div class="post-creator"><strong>Giá bán hiện tại:</strong> <span>50.000đ</span></div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-6 col-lg-6 col-xl-4">
+                            <div class="post">
+                                <div class="post-img"></div>
+                                <a href="#" class="post-link">
+                                    <div class="post-img-hovered"></div>
+                                </a>
+                                <div class="post-info">
+                                    <div class="post-about">
+                                        <a href="#" class="post-cat">ĐỒ ĂN</a>
+                                        <div class="post-time">
+                                            <div class="badge bg-warning" style="font-size: 15px;">20 điểm </div>
+                                        </div>
+                                    </div>
+                                    <h1 class="heading">Súp cua hải sản</h1>
+                                    <p class="post-desc">
+                                        <button type="button" class="btn btn-outline-warning" data-mdb-ripple-init
+                                                data-mdb-ripple-color="dark">
+                                            Đổi thưởng
+                                        </button>
+                                        <button type="button" class="btn btn-warning" data-mdb-ripple-init>Xem chi tiết</button>
+                                    </p>
+
+                                    <div class="post-creator"><strong>Giá bán hiện tại:</strong> <span>50.000đ</span></div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-12">
+                            <div class="pagination d-flex justify-content-center mt-5">
+                                <a href="#" class="rounded">&laquo;</a>
+                                <a href="#" class="active rounded">1</a>
+                                <a href="#" class="rounded">2</a>
+                                <a href="#" class="rounded">3</a>
+                                <a href="#" class="rounded">4</a>
+                                <a href="#" class="rounded">5</a>
+                                <a href="#" class="rounded">6</a>
+                                <a href="#" class="rounded">&raquo;</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+

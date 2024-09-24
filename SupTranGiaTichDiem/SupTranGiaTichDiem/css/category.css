@@ -1,0 +1,23 @@
+.pagination {
+    display: inline-block;
+}
+  
+.pagination a {
+    color: white;
+    padding: 10px 16px;
+    text-decoration: none;
+    transition: 0.5s;
+    border: 1px solid rgb(87, 87, 87);
+    margin: 0 4px;
+}
+  
+.pagination a.active {
+    background-color: rgb(251, 255, 0);
+    color: black;
+    border: 1px solid gray;
+}
+  
+.pagination a:hover:not(.active) {
+    background-color: rgb(251, 255, 0);
+    color: black;
+}

@@ -1,0 +1,121 @@
+﻿
+@{
+    ViewBag.Title = "Chi tiết ";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+@model SupTranGiaTichDiem.Models.Reward
+
+<div class="row g-4 mb-5">
+    <div class="col-lg-8 col-xl-9">
+        <div class="row g-4">
+            <div class="col-lg-5">
+                <div class="border rounded">
+                    <a href="#">
+                        <img src="~/img/@Model.reward_image" class="img-fluid rounded" alt="@Model.reward_name">
+                    </a>
+                </div>
+            </div>
+            <div class="col-lg-7 bg-dark-subtle p-4">
+                <h3 class="fw-bold mb-3">@Model.reward_name</h3>
+                <span class="badge badge-primary mb-3 " style="font-size:15px"> @Model.Category.category_name</span>
+                <h5 class="fw-bold mb-3  text-success">@Model.points_required Điểm </h5>
+
+                <p class="mb-4"><h4>Thành Phần: </h4> @Model.description</p>
+
+                <div class="product-quantity">
+                    <label for="product-quantity-input" class="product-quantity-label text-primary " style="font-weight: bolder;">Số lượng</label>
+                    <div class="product-quantity-subtract">
+                        <i class="fa fa-chevron-left"></i>
+                    </div>
+                    <div>
+                        <input type="text" id="product-quantity-input" placeholder="0" value="0" />
+                    </div>
+                    <div class="product-quantity-add">
+                        <i class="fa fa-chevron-right"></i>
+                    </div>
+                </div>
+                <button type="button" class="btn btn-warning " data-mdb-ripple-init>Đổi thưởng</button>
+                <button type="button" class="btn btn-light " data-mdb-ripple-init>Thêm vào danh sách</button>
+            </div>
+
+
+        </div>
+
+        <!--<section class="latest-albums-area section-padding-0-100">
+
+            <div class="container-fluid">
+                <div class=" text-light pb-3 pt-4">
+                    <h2>Các sản phẩm tương tự</h2>
+                </div>
+
+                <div class="row">
+                    <div class="col-12">
+                        <div class="albums-slideshow owl-carousel">-->
+                            <!-- Single Album -->
+                            <!--<div class="single-album">
+                                <img src="~/img/sup-15k.png" alt="" class="img-fluid">
+                                <div class="album-info">
+                                    <a href="#" class="text-warning">
+                                        <h5>Súp bào ngư đặc biệt</h5>
+                                    </a>
+                                    <div class="badge bg-primary text-wrap"><p>20 điểm</p></div>
+                                </div>
+                            </div>
+
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </section>-->
+    </div>
+    <div class="col-lg-4 col-xl-3">
+        <div class="row g-4">
+            <div class="col-12 b">
+                <div class="input-group w-100 mx-auto d-flex">
+                    <div class="form-outline" data-mdb-input-init>
+                        <input id="search-input" type="search" id="form1" class="form-control bg-light" style="color: white;" />
+                        <label class="form-label" for="form1">Search</label>
+                    </div>
+                    <button id="search-button" type="button" class="btn btn-warning">
+                        <i class="fas fa-search"></i>
+                    </button>
+                </div>
+            </div>
+            <div class="col-lg-12">
+                <div class="mb-3">
+                    <h4>Categories</h4>
+                    <ul class="list-unstyled fruite-categorie">
+                        <li class="">
+                            <div class="d-flex justify-content-between ">
+                                <a href="#" style="color: aliceblue;"><i class="fas fa-apple-alt me-2"></i>Đồ ăn</a>
+                                <span>(3)</span>
+                            </div>
+                        </li>
+                        <li>
+                            <div class="d-flex justify-content-between ">
+                                <a href="#" style="color: aliceblue;"><i class="fas fa-apple-alt me-2"></i>Đồ uống</a>
+                                <span>(5)</span>
+                            </div>
+                        </li>
+
+
+                    </ul>
+                </div>
+            </div>
+
+
+            <div class="col-lg-12">
+                <h4 class="mb-3">Phổ biến nhất</h4>
+
+
+                @Html.Action("Top3SanPham", "Home")
+                <div class="d-flex justify-content-center my-4">
+                    <a href="~/Home/ListSanPham" class="btn border border-light px-4 py-3 rounded-pill text-light w-100">Vew More</a>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</div>

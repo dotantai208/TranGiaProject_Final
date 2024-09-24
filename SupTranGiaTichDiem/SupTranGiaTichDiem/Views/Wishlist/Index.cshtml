@@ -1,0 +1,459 @@
+﻿@model List<SupTranGiaTichDiem.Models.WishlistItem>
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<style>
+    .product-quantity {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+
+    .table {
+        width: 100%;
+        margin: 0 auto;
+        border-collapse: collapse;
+    }
+
+        .table th, .table td {
+            vertical-align: middle;
+            text-align: center;
+        }
+
+        .table .form-check-input {
+            margin: 0 auto;
+        }
+
+    .product-quantity-subtract,
+    .product-quantity-add {
+        cursor: pointer;
+        color: darkseagreen;
+        font-size: 1.2em;
+        user-select: none;
+    }
+
+        .product-quantity-subtract:hover,
+        .product-quantity-add:hover {
+            color: #0056b3;
+        }
+
+    .product-quantity-input {
+        width: 50px;
+        border: 1px solid #8b7a1a;
+        border-radius: 4px;
+        text-align: center;
+        font-size: 1em;
+        padding: 2px;
+    }
+
+    .custom-checkbox {
+        display: inline-flex;
+        align-items: center;
+        cursor: pointer;
+        user-select: none;
+        font-size: 16px;
+        color: #333;
+        transition: color 0.3s;
+    }
+
+        .custom-checkbox input[type="checkbox"] {
+            display: none;
+        }
+
+        .custom-checkbox .checkmark {
+            width: 24px;
+            height: 24px;
+            border: 2px solid #333;
+            border-radius: 4px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-right: 10px;
+            transition: background-color 0.3s, border-color 0.3s, transform 0.3s;
+            transform-style: preserve-3d;
+        }
+
+            .custom-checkbox .checkmark::before {
+                content: "\2713";
+                font-size: 16px;
+                color: transparent;
+                transition: color 0.3s, transform 0.3s;
+            }
+
+        .custom-checkbox input[type="checkbox"]:checked + .checkmark {
+            background-color: #333;
+            border-color: #333;
+            transform: scale(1.1) rotateZ(360deg) rotateY(360deg);
+        }
+
+            .custom-checkbox input[type="checkbox"]:checked + .checkmark::before {
+                color: #fff;
+            }
+
+        .custom-checkbox:hover {
+            color: #666;
+        }
+
+            .custom-checkbox:hover .checkmark {
+                border-color: #666;
+                background-color: #f0f0f0;
+                transform: scale(1.05);
+            }
+
+        .custom-checkbox input[type="checkbox"]:focus + .checkmark {
+            box-shadow: 0 0 3px 2px rgba(0, 0, 0, 0.2);
+            outline: none;
+        }
+
+        .custom-checkbox .checkmark,
+        .custom-checkbox input[type="checkbox"]:checked + .checkmark {
+            transition: background-color 1.3s, border-color 1.3s, color 1.3s, transform 0.3s;
+        }
+
+
+
+
+
+
+    a {
+        border: 0 none;
+        outline: 0;
+        text-decoration: none;
+    }
+
+    strong {
+        font-weight: bold;
+    }
+
+
+
+    input,
+    button {
+        border: 0 none;
+        outline: 0 none;
+    }
+
+    button {
+        background-color: #666;
+        color: #fff;
+    }
+
+        button:hover,
+        button:focus {
+            background-color: #555;
+        }
+
+
+
+
+
+
+
+    .hide {
+        display: none;
+    }
+
+
+    .basket,
+    aside {
+        padding: 0 1rem;
+        -webkit-box-sizing: border-box;
+        -moz-box-sizing: border-box;
+        box-sizing: border-box;
+    }
+
+
+
+
+
+
+
+
+
+
+    aside {
+        font-family: 'Open Sans', sans-serif;
+        font-size: 100%;
+    }
+
+    .summary {
+        background-color: #eee;
+        border: 1px solid #aaa;
+        padding: 1rem;
+        -webkit-box-sizing: border-box;
+        -moz-box-sizing: border-box;
+        box-sizing: border-box;
+    }
+
+    .summary-total-items {
+        color: #666;
+        font-size: 0.875rem;
+        text-align: center;
+    }
+
+    .summary-subtotal,
+    .summary-total {
+        border-top: 1px solid #ccc;
+        border-bottom: 1px solid #ccc;
+        clear: both;
+        margin: 1rem 0;
+        overflow: hidden;
+        padding: 0.5rem 0;
+    }
+
+    .subtotal-title,
+    .subtotal-value,
+    .total-title,
+    .total-value,
+    .promo-title,
+    .promo-value {
+        color: #111;
+        float: left;
+        width: 50%;
+    }
+
+    .summary-promo {
+        -webkit-transition: all .3s ease;
+        -moz-transition: all .3s ease;
+        -o-transition: all .3s ease;
+        transition: all .3s ease;
+    }
+
+
+
+
+
+    .summary-delivery {
+        padding-bottom: 3rem;
+    }
+
+
+
+    .total-title {
+        font-weight: bold;
+        text-transform: uppercase;
+    }
+
+    .summary-checkout {
+        display: block;
+    }
+
+    .checkout-cta {
+        display: block;
+        float: none;
+        font-size: 0.75rem;
+        text-align: center;
+        text-transform: uppercase;
+        padding: 0.625rem 0;
+        width: 100%;
+    }
+</style>
+
+<div class="row">
+    <div class="col-lg-9">
+        <table class="table table-hover table-bordered border-dark">
+            <thead class="table-dark">
+                <tr>
+                    <th>Chọn</th>
+                    <th>Hình ảnh</th>
+                    <th>Tên sản phẩm</th>
+                    <th>Số điểm cần</th>
+                    <th>Số lượng</th>
+                    <th>Tổng điểm</th>
+                    <th>Hành động</th>
+                </tr>
+            </thead>
+            <tbody class="text-light table-warning text-center">
+                @foreach (var item in Model)
+                {
+                    <tr data-reward-id="@item.RewardId">
+                        <td>
+                            <input type="checkbox" class="item-checkbox" checked />
+                        </td>
+                        <td>
+                            <img src="@Url.Content("~/img/" + item.Reward.reward_image)" alt="@item.Reward.reward_name" style="width: 100px; height: auto;" />
+                        </td>
+                        <td><h5>@item.Reward.reward_name</h5></td>
+                        <td class="points-required">@item.Reward.points_required</td>
+                        <td class="quantity-field">
+                            <div class="product-quantity d-flex">
+                                <div class="product-quantity-subtract">
+                                    <i class="fa fa-chevron-left"></i>
+                                </div>
+                                <div class="text-center">
+                                    <input type="text" id="product-quantity-input-@item.RewardId" class="product-quantity-input" placeholder="0" value="@item.Quantity" min="1" style="width:40px" />
+                                </div>
+                                <div class="product-quantity-add">
+                                    <i class="fa fa-chevron-right"></i>
+                                </div>
+                            </div>
+                        </td>
+                        <td class="total-points">@item.TotalPoints</td>
+                        <td>
+                            @using (Html.BeginForm("Remove", "Wishlist", FormMethod.Post))
+                            {
+                                @Html.AntiForgeryToken()
+                                @Html.Hidden("rewardId", item.RewardId)
+                                <button type="submit" class="btn btn-danger">Xóa</button>
+                            }
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+    <div class="col-lg-3 mt-1">
+        <aside>
+            <div class="summary">
+                <h5 class="text-dark font-monospace">THỦ TỤC GIAO DỊCH</h5>
+                <div class="summary-total-items pt-2"><span class="total-items text-danger"></span> sản phẩm trong giỏ hàng</div>
+                <div class="summary-subtotal">
+                    <div class="subtotal-title">Điểm hiện tại:</div>
+                    <div class="subtotal-value final-value" id="basket-subtotal">@ViewBag.UserPoints</div>
+                </div>
+                <div class="summary-subtotal">
+                    <div class="subtotal-title">Điểm sản phẩm:</div>
+                    <div class="total-value final-value summary-promo" id="totalPoints">0</div>
+                </div>
+                <div class="summary-subtotal">
+                    <div class="total-title">Bạn cần thêm:</div>
+                    <div class="total-value final-value summary-promo" id="points-needed">0</div>
+                </div>
+                <div class="summary-subtotal">
+                    <div class="total-title">Số dư còn lại:</div>
+                    <div class="total-value final-value" id="remaining-points">0</div>
+                </div>
+                <div class="summary-checkout text-bg-warning">
+                    <button class="checkout-cta" id="confirm-button">Xác nhận</button>
+                </div>
+            </div>
+        </aside>
+    </div>
+</div>
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script>
+    $(document).ready(function() {
+        // Tính toán tổng số điểm khi trang được tải
+        calculateTotals();
+
+        // Xử lý sự kiện khi bấm vào nút trừ
+        $('.product-quantity-subtract').click(function() {
+            var $input = $(this).siblings('div').find('input');
+            var newVal = parseInt($input.val()) - 1;
+            if (newVal >= 1) {
+                $input.val(newVal);
+            } else {
+                $input.val(1);
+            }
+            calculateTotals();
+        });
+
+        // Xử lý sự kiện khi bấm vào nút cộng
+        $('.product-quantity-add').click(function() {
+            var $input = $(this).siblings('div').find('input');
+            var newVal = parseInt($input.val()) + 1;
+            $input.val(newVal);
+            calculateTotals();
+        });
+
+        // Xử lý sự kiện khi thay đổi số lượng bằng cách nhập giá trị trực tiếp
+        $('.product-quantity-input').on('input', function() {
+            var $input = $(this);
+            var newVal = parseInt($input.val());
+            if (isNaN(newVal) || newVal < 1) {
+                $input.val(1);
+            }
+            calculateTotals();
+        });
+
+        // Xử lý sự kiện khi checkbox được chọn hoặc bỏ chọn
+        $('.item-checkbox').change(function() {
+            calculateTotals();
+        });
+
+        // Hàm tính toán tổng số điểm và số lượng sản phẩm
+        function calculateTotals() {
+            var totalPoints = 0;
+            var totalItems = 0;
+            $('.item-checkbox:checked').each(function() {
+                var $row = $(this).closest('tr');
+                var quantity = parseInt($row.find('.product-quantity-input').val());
+                var pointsRequired = parseInt($row.find('.points-required').text());
+                var totalItemPoints = (isNaN(quantity) ? 0 : quantity) * (isNaN(pointsRequired) ? 0 : pointsRequired);
+                totalPoints += totalItemPoints;
+                totalItems += (isNaN(quantity) ? 0 : quantity);
+                $row.find('.total-points').text(totalItemPoints); // Update the total points for each item
+            });
+            $('#totalPoints').text(totalPoints);
+
+            var currentPoints = parseInt($('#basket-subtotal').text());
+            var pointsNeeded = totalPoints - currentPoints;
+            $('#points-needed').text(pointsNeeded > 0 ? pointsNeeded : 0);
+            $('#remaining-points').text(pointsNeeded <= 0 ? currentPoints - totalPoints : 0);
+
+            // Cập nhật số lượng sản phẩm trong giỏ hàng
+            $('.total-items').text(totalItems);
+        }
+
+        // Xử lý sự kiện khi bấm nút xác nhận đổi thưởng
+        $('#confirm-button').click(function() {
+            var totalPoints = parseInt($('#totalPoints').text());
+            var totalItems = parseInt($('.total-items').text());
+            var currentPoints = parseInt($('#basket-subtotal').text());
+
+            if (totalItems === 0) {
+                Swal.fire({
+                    icon: 'warning',
+                    title: 'Giỏ hàng của bạn trống',
+                    text: 'Vui lòng chọn ít nhất một sản phẩm.'
+                });
+                return;
+            }
+
+            if (totalPoints > currentPoints) {
+                Swal.fire({
+                    icon: 'error',
+                    title: 'Không đủ điểm',
+                    text: 'Bạn không đủ điểm để đổi thưởng. Vui lòng kiểm tra lại.'
+                });
+            } else {
+                $.ajax({
+                    url: '@Url.Action("ConfirmRedemption", "Wishlist")',
+                    type: 'POST',
+                    data: {
+                        totalPoints: totalPoints,
+                        remainingPoints: currentPoints - totalPoints
+                    },
+                    success: function(result) {
+                        if (result.success) {
+                            Swal.fire({
+                                icon: 'success',
+                                title: 'Đổi thưởng thành công!',
+                                text: 'Hãy đến quán Súp Trần Gia để nhận '
+                            }).then(() => {
+                                location.reload();
+                            });
+                        } else {
+                            Swal.fire({
+                                icon: 'error',
+                                title: 'Đã xảy ra lỗi',
+                                text: 'Vui lòng thử lại.'
+                            });
+                        }
+                    },
+                    error: function() {
+                        Swal.fire({
+                            icon: 'error',
+                            title: 'Đã xảy ra lỗi',
+                            text: 'Vui lòng thử lại.'
+                        });
+                    }
+                });
+            }
+        });
+    });
+</script>
+

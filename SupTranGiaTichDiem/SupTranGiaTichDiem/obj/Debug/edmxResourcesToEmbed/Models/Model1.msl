@@ -1,0 +1,147 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+  <EntityContainerMapping StorageEntityContainer="dataTranGiaModelStoreContainer" CdmEntityContainer="dataTranGiaEntities">
+    <EntitySetMapping Name="Accounts">
+      <EntityTypeMapping TypeName="dataTranGiaModel.Account">
+        <MappingFragment StoreEntitySet="Account">
+          <ScalarProperty Name="acc_id" ColumnName="acc_id" />
+          <ScalarProperty Name="phone" ColumnName="phone" />
+          <ScalarProperty Name="password" ColumnName="password" />
+          <ScalarProperty Name="fullname" ColumnName="fullname" />
+          <ScalarProperty Name="birthday" ColumnName="birthday" />
+          <ScalarProperty Name="status" ColumnName="status" />
+          <ScalarProperty Name="Email" ColumnName="Email" />
+          <ScalarProperty Name="CreateBy" ColumnName="CreateBy" />
+          <ScalarProperty Name="CreateDate" ColumnName="CreateDate" />
+          <ScalarProperty Name="UpdateBy" ColumnName="UpdateBy" />
+          <ScalarProperty Name="UpdateDate" ColumnName="UpdateDate" />
+          <ScalarProperty Name="role" ColumnName="role" />
+          <ScalarProperty Name="Branch" ColumnName="Branch" />
+          <ScalarProperty Name="Point" ColumnName="Point" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Blogs">
+      <EntityTypeMapping TypeName="dataTranGiaModel.Blog">
+        <MappingFragment StoreEntitySet="Blog">
+          <ScalarProperty Name="blog_id" ColumnName="blog_id" />
+          <ScalarProperty Name="blog_name" ColumnName="blog_name" />
+          <ScalarProperty Name="blog_date" ColumnName="blog_date" />
+          <ScalarProperty Name="blog_detail" ColumnName="blog_detail" />
+          <ScalarProperty Name="blog_acc_id" ColumnName="blog_acc_id" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Branches">
+      <EntityTypeMapping TypeName="dataTranGiaModel.Branch">
+        <MappingFragment StoreEntitySet="Branch">
+          <ScalarProperty Name="Branch_id" ColumnName="Branch_id" />
+          <ScalarProperty Name="Branch_Name" ColumnName="Branch_Name" />
+          <ScalarProperty Name="Adress" ColumnName="Adress" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Categories">
+      <EntityTypeMapping TypeName="dataTranGiaModel.Category">
+        <MappingFragment StoreEntitySet="Category">
+          <ScalarProperty Name="category_id" ColumnName="category_id" />
+          <ScalarProperty Name="category_name" ColumnName="category_name" />
+          <ScalarProperty Name="category_description" ColumnName="category_description" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="images">
+      <EntityTypeMapping TypeName="dataTranGiaModel.image">
+        <MappingFragment StoreEntitySet="image">
+          <ScalarProperty Name="image_id" ColumnName="image_id" />
+          <ScalarProperty Name="image1" ColumnName="image" />
+          <ScalarProperty Name="blog_id" ColumnName="blog_id" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="PointHistories">
+      <EntityTypeMapping TypeName="dataTranGiaModel.PointHistory">
+        <MappingFragment StoreEntitySet="PointHistory">
+          <ScalarProperty Name="his_id" ColumnName="his_id" />
+          <ScalarProperty Name="his_date" ColumnName="his_date" />
+          <ScalarProperty Name="his_note" ColumnName="his_note" />
+          <ScalarProperty Name="his_pointchange" ColumnName="his_pointchange" />
+          <ScalarProperty Name="his_acc_id" ColumnName="his_acc_id" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Redemptions">
+      <EntityTypeMapping TypeName="dataTranGiaModel.Redemption">
+        <MappingFragment StoreEntitySet="Redemption">
+          <ScalarProperty Name="red_quantity" ColumnName="red_quantity" />
+          <ScalarProperty Name="red_status" ColumnName="red_status" />
+          <ScalarProperty Name="redemption_id" ColumnName="redemption_id" />
+          <ScalarProperty Name="redemption_date" ColumnName="redemption_date" />
+          <ScalarProperty Name="reward_id" ColumnName="reward_id" />
+          <ScalarProperty Name="red_acc_id" ColumnName="red_acc_id" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Rewards">
+      <EntityTypeMapping TypeName="dataTranGiaModel.Reward">
+        <MappingFragment StoreEntitySet="Reward">
+          <ScalarProperty Name="reward_id" ColumnName="reward_id" />
+          <ScalarProperty Name="reward_name" ColumnName="reward_name" />
+          <ScalarProperty Name="points_required" ColumnName="points_required" />
+          <ScalarProperty Name="reward_date" ColumnName="reward_date" />
+          <ScalarProperty Name="reward_image" ColumnName="reward_image" />
+          <ScalarProperty Name="description" ColumnName="description" />
+          <ScalarProperty Name="quantity" ColumnName="quantity" />
+          <ScalarProperty Name="status" ColumnName="status" />
+          <ScalarProperty Name="category_id" ColumnName="category_id" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="vw_RedemptionDetails">
+      <EntityTypeMapping TypeName="dataTranGiaModel.vw_RedemptionDetails">
+        <MappingFragment StoreEntitySet="vw_RedemptionDetails">
+          <ScalarProperty Name="red_status" ColumnName="red_status" />
+          <ScalarProperty Name="reward_name" ColumnName="reward_name" />
+          <ScalarProperty Name="points_required" ColumnName="points_required" />
+          <ScalarProperty Name="fullname" ColumnName="fullname" />
+          <ScalarProperty Name="phone" ColumnName="phone" />
+          <ScalarProperty Name="redemption_id" ColumnName="redemption_id" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <FunctionImportMapping FunctionImportName="UpdateTempProductCategory" FunctionName="dataTranGiaModel.Store.UpdateTempProductCategory" />
+    <EntitySetMapping Name="TempProductCategories">
+      <EntityTypeMapping TypeName="dataTranGiaModel.TempProductCategory">
+        <MappingFragment StoreEntitySet="TempProductCategory">
+          <ScalarProperty Name="ProductCount" ColumnName="ProductCount" />
+          <ScalarProperty Name="category_name" ColumnName="category_name" />
+          <ScalarProperty Name="category_id" ColumnName="category_id" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="WishlistItems">
+      <EntityTypeMapping TypeName="dataTranGiaModel.WishlistItem">
+        <MappingFragment StoreEntitySet="WishlistItem">
+          <ScalarProperty Name="status" ColumnName="status" />
+          <ScalarProperty Name="AccId" ColumnName="AccId" />
+          <ScalarProperty Name="Quantity" ColumnName="Quantity" />
+          <ScalarProperty Name="RewardId" ColumnName="RewardId" />
+          <ScalarProperty Name="WishlistItemId" ColumnName="WishlistItemId" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="vw_HistoryPointChange">
+      <EntityTypeMapping TypeName="dataTranGiaModel.vw_HistoryPointChange">
+        <MappingFragment StoreEntitySet="vw_HistoryPointChange">
+          <ScalarProperty Name="acc_id" ColumnName="acc_id" />
+          <ScalarProperty Name="his_pointchange" ColumnName="his_pointchange" />
+          <ScalarProperty Name="his_note" ColumnName="his_note" />
+          <ScalarProperty Name="his_date" ColumnName="his_date" />
+          <ScalarProperty Name="fullname" ColumnName="fullname" />
+          <ScalarProperty Name="phone" ColumnName="phone" />
+          <ScalarProperty Name="his_id" ColumnName="his_id" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+  </EntityContainerMapping>
+</Mapping>

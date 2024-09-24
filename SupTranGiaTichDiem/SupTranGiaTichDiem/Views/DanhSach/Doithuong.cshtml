@@ -1,0 +1,76 @@
+﻿@model IEnumerable<SupTranGiaTichDiem.Models.Reward>
+
+@{
+    ViewBag.Title = "Doithuong";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>Doithuong</h2>
+
+<p>
+    @Html.ActionLink("Create New", "Create")
+</p>
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.reward_name)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.points_required)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.reward_date)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.reward_image)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.description)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.quantity)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.status)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Category.category_name)
+        </th>
+        <th></th>
+    </tr>
+
+@foreach (var item in Model) {
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.reward_name)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.points_required)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.reward_date)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.reward_image)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.description)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.quantity)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.status)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Category.category_name)
+        </td>
+        <td>
+            @Html.ActionLink("Edit", "Edit", new { id=item.reward_id }) |
+            @Html.ActionLink("Details", "Details", new { id=item.reward_id }) |
+            @Html.ActionLink("Delete", "Delete", new { id=item.reward_id })
+        </td>
+    </tr>
+}
+
+</table>

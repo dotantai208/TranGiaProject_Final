@@ -1,0 +1,204 @@
+﻿@{
+    ViewBag.Title = "ListSanPham";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+@model List<SupTranGiaTichDiem.Models.Reward>
+<style>
+    .post-desc {
+        position: relative;
+        z-index: 10;
+    }
+
+        .post-desc button {
+            cursor: pointer;
+            z-index: 20;
+        }
+
+            .post-desc button.btn-warning:hover,
+            .post-desc button.btn-outline-warning:hover {
+                background-color: #f0ad4e;
+                border-color: #eea236;
+            }
+
+    .post:hover .post-desc {
+        z-index: 30;
+    }
+</style>
+<div>
+    
+    <div class="row g-4">
+        <div class="col-lg-12">
+            <div class="row g-4">
+                <div class="col-xl-3">
+                    <div class="input-group w-100 mx-auto d-flex">
+                        <div class="form-outline" data-mdb-input-init>
+                            <input id="search-input" type="search" id="form1" class="form-control " style="color: white;" />
+                            <label class="form-label" for="form1">Search</label>
+                        </div>
+                        <button id="search-button" type="button" class="btn btn-warning">
+                            <i class="fas fa-search"></i>
+                        </button>
+                    </div>
+                </div>
+                
+               
+            </div>
+            <div class="row g-4">
+                <div class="col-lg-3">
+                    <div class="row g-4">
+                        <div class="col-lg-12">
+                            <div class="mb-3 mt-3">
+                              
+                                <ul class="list-unstyled fruite-categorie">
+                                    <li>
+                                        <div class="d-flex justify-content-between ">
+                                            <a href="~/Home/listsanpham" style="color: aliceblue;">
+                                                <i class="fas fa-apple-alt me-2"></i>Tất cả
+                                            </a>
+
+                                        </div>
+                                    </li>
+                                    @foreach (var item in ViewBag.Category)
+                                    {
+
+                                        <li>
+                                            <div class="d-flex justify-content-between ">
+                                                <a href="@Url.Action("ListSanPham", "Home", new { maloai = item.category_id })" style="color: aliceblue;">
+                                                    <i class="fas fa-apple-alt me-2"></i>@item.category_name
+                                                </a>
+                                                <span>(@item.ProductCount)</span>
+                                            </div>
+                                        </li>
+                                    }
+                                </ul>
+                            </div>
+                        </div>
+                        <div class="col-lg-12">
+                            <div class="mb-3">
+                                <h4 class="mb-2">Lọc theo điểm</h4>
+                                <input type="range" class="form-range w-100" id="rangeInput" name="rangeInput" min="0" max="@ViewBag.UserPoints" value="0" oninput="filterByPoints(this.value)">
+                                <output id="amount" name="amount" for="rangeInput">0</output>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-lg-9">
+                    <div class="row g-4 justify-content-center" id="filteredProducts">
+                        @if (!Model.Any())
+                        {
+                            <div class="col-12">
+                                <div class="alert alert-warning text-center" role="alert">
+                                    Không có sản phẩm nào phù hợp với số điểm của bạn.
+                                </div>
+                            </div>
+                        }
+                        else
+                        {
+                            foreach (var item in Model)
+                            {
+                                <div class="col-md-6 col-lg-6 col-xl-4" data-points="@item.points_required">
+                                    <div class="post">
+                                        <div class="post-img" style="background-image: var(--post-img-hovered-overlay), url('@Url.Content("~/img/" + item.reward_image)');"></div>
+                                        <a href="@Url.Action("ChiTietSanPham", "Home", new { Reward_id = item.reward_id })" class="post-link">
+                                            <div class="post-img-hovered" style="background-image: var(--post-img-hovered-overlay), url('@Url.Content("~/img/" + item.reward_image)');"></div>
+                                        </a>
+                                        <div class="post-info" >
+                                            <div class="post-about">
+                                                <a href="#" class="post-cat" style="width:80px">@item.Category.category_name</a>
+                                                <div class="post-time">
+                                                    <div class="badge bg-warning" style="font-size: 15px;">@item.points_required điểm </div>
+                                                </div>
+                                            </div>
+                                            <h1 class="heading dai">@item.reward_name</h1>
+
+                                            <p class="post-desc " style="" >
+                                                <button type="button" class="btn btn-warning" data-mdb-ripple-init>Đổi ngay</button>
+                                                <button type="button" class="btn btn-outline-warning add-to-wishlist-btn" data-reward-id="@item.reward_id" data-mdb-ripple-init><i class="fa-solid fa-cart-plus fa-lg" style="color: #ffffff;"></i></button>
+                                            </p>
+
+                                            <div class="post-creator">
+                                                <span class="text-light">
+                                                    Ngày tạo: @(item.reward_date.HasValue ? item.reward_date.Value.ToString("dd/MM/yyyy") : "Không xác định")
+                                                </span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            }
+                        }
+
+                    </div>
+
+                    <div class="col-12">
+                        <div class="pagination d-flex justify-content-center mt-5">
+                            @if (ViewBag.CurrentPage > 1)
+                            {
+                                <a href="@Url.Action("ListSanPham", new { page = 1 })" class="rounded">&laquo;</a>
+                            }
+                            @for (int i = 1; i <= ViewBag.TotalPages; i++)
+                            {
+                                <a href="@Url.Action("ListSanPham", new { page = i })" class="@(i == ViewBag.CurrentPage ? "active rounded" : "rounded")">@i</a>
+                            }
+                            @if (ViewBag.CurrentPage < ViewBag.TotalPages)
+                            {
+                                <a href="@Url.Action("ListSanPham", new { page = ViewBag.TotalPages })" class="rounded">&raquo;</a>
+                            }
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    function filterByPoints(points) {
+        document.querySelectorAll('[data-points]').forEach(function (product) {
+            if (parseInt(product.getAttribute('data-points')) <= points) {
+                product.style.display = 'block';
+            } else {
+                product.style.display = 'none';
+            }
+        });
+        document.getElementById('amount').textContent = points;
+    }
+</script>
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
+<script>
+    $(document).ready(function () {
+        $('.add-to-wishlist-btn').on('click', function () {
+            var rewardId = $(this).data('reward-id');
+            var token = $('input[name="__RequestVerificationToken"]').val(); // Get the AntiForgeryToken value
+
+            $.ajax({
+                url: '@Url.Action("Add", "Wishlist")',
+                type: 'POST',
+                data: {
+                    __RequestVerificationToken: token,
+                    rewardId: rewardId
+                },
+                success: function (response) {
+                    Swal.fire({
+                        title: 'Thành công!',
+                        text: 'Sản phẩm đã được thêm vào danh sách!',
+                        icon: 'success',
+                        confirmButtonText: 'OK'
+                    });
+                },
+                error: function () {
+                    Swal.fire({
+                        title: 'Lỗi!',
+                        text: 'Đã xảy ra lỗi khi thêm sản phẩm vào danh sách.',
+                        icon: 'error',
+                        confirmButtonText: 'OK'
+                    });
+                }
+            });
+        });
+    });
+</script>
+

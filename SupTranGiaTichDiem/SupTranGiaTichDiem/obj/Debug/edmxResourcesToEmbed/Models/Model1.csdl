@@ -1,0 +1,317 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="dataTranGiaModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+  <EntityType Name="Account">
+    <Key>
+      <PropertyRef Name="acc_id" />
+    </Key>
+    <Property Name="acc_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="phone" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
+    <Property Name="password" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
+    <Property Name="fullname" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
+    <Property Name="birthday" Type="DateTime" Precision="0" />
+    <Property Name="status" Type="Boolean" />
+    <Property Name="Email" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
+    <Property Name="CreateBy" Type="Int32" />
+    <Property Name="CreateDate" Type="DateTime" Precision="3" />
+    <Property Name="UpdateBy" Type="Int32" />
+    <Property Name="UpdateDate" Type="DateTime" Precision="3" />
+    <Property Name="role" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
+    <Property Name="Branch" Type="Int32" />
+    <Property Name="Point" Type="Double" />
+    <NavigationProperty Name="Branch1" Relationship="Self.FK__Account__Branch__38996AB5" FromRole="Account" ToRole="Branch" />
+    <NavigationProperty Name="Blogs" Relationship="Self.FK__Blog__blog_acc_i__398D8EEE" FromRole="Account" ToRole="Blog" />
+    <NavigationProperty Name="PointHistories" Relationship="Self.FK__PointHist__his_a__3B75D760" FromRole="Account" ToRole="PointHistory" />
+    <NavigationProperty Name="Redemptions" Relationship="Self.FK__Redemptio__red_a__3C69FB99" FromRole="Account" ToRole="Redemption" />
+    <NavigationProperty Name="WishlistItems" Relationship="dataTranGiaModel.FK__WishlistI__AccId__3D2915A8" FromRole="Account" ToRole="WishlistItem" />
+  </EntityType>
+  <EntityType Name="Blog">
+    <Key>
+      <PropertyRef Name="blog_id" />
+    </Key>
+    <Property Name="blog_id" Type="Int32" Nullable="false" />
+    <Property Name="blog_name" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
+    <Property Name="blog_date" Type="DateTime" Precision="0" />
+    <Property Name="blog_detail" Type="Int32" />
+    <Property Name="blog_acc_id" Type="Int32" Nullable="false" />
+    <NavigationProperty Name="Account" Relationship="Self.FK__Blog__blog_acc_i__398D8EEE" FromRole="Blog" ToRole="Account" />
+    <NavigationProperty Name="images" Relationship="Self.FK__image__blog_id__3A81B327" FromRole="Blog" ToRole="image" />
+  </EntityType>
+  <EntityType Name="Branch">
+    <Key>
+      <PropertyRef Name="Branch_id" />
+    </Key>
+    <Property Name="Branch_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="Branch_Name" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
+    <Property Name="Adress" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
+    <NavigationProperty Name="Accounts" Relationship="Self.FK__Account__Branch__38996AB5" FromRole="Branch" ToRole="Account" />
+  </EntityType>
+  <EntityType Name="Category">
+    <Key>
+      <PropertyRef Name="category_id" />
+    </Key>
+    <Property Name="category_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="category_name" Type="String" MaxLength="256" FixedLength="false" Unicode="true" />
+    <Property Name="category_description" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
+    <NavigationProperty Name="Rewards" Relationship="Self.FK__Reward__category__3E52440B" FromRole="Category" ToRole="Reward" />
+  </EntityType>
+  <EntityType Name="image">
+    <Key>
+      <PropertyRef Name="image_id" />
+    </Key>
+    <Property Name="image_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="image1" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
+    <Property Name="blog_id" Type="Int32" />
+    <NavigationProperty Name="Blog" Relationship="Self.FK__image__blog_id__3A81B327" FromRole="image" ToRole="Blog" />
+  </EntityType>
+  <EntityType Name="PointHistory">
+    <Key>
+      <PropertyRef Name="his_id" />
+    </Key>
+    <Property Name="his_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="his_date" Type="DateTime" Precision="3" />
+    <Property Name="his_note" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
+    <Property Name="his_pointchange" Type="Double" />
+    <Property Name="his_acc_id" Type="Int32" />
+    <NavigationProperty Name="Account" Relationship="Self.FK__PointHist__his_a__3B75D760" FromRole="PointHistory" ToRole="Account" />
+  </EntityType>
+  <EntityType Name="Redemption">
+    <Key>
+      <PropertyRef Name="redemption_id" />
+    </Key>
+    <Property Name="redemption_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="redemption_date" Type="DateTime" Precision="0" />
+    <Property Name="reward_id" Type="Int32" />
+    <Property Name="red_acc_id" Type="Int32" />
+    <NavigationProperty Name="Account" Relationship="Self.FK__Redemptio__red_a__3C69FB99" FromRole="Redemption" ToRole="Account" />
+    <NavigationProperty Name="Reward" Relationship="Self.FK__Redemptio__rewar__3D5E1FD2" FromRole="Redemption" ToRole="Reward" />
+    <Property Name="red_status" Type="Boolean" />
+    <Property Name="red_quantity" Type="Double" />
+  </EntityType>
+  <EntityType Name="Reward">
+    <Key>
+      <PropertyRef Name="reward_id" />
+    </Key>
+    <Property Name="reward_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="reward_name" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
+    <Property Name="points_required" Type="Double" />
+    <Property Name="reward_date" Type="DateTime" Precision="0" />
+    <Property Name="reward_image" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
+    <Property Name="description" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
+    <Property Name="quantity" Type="Int32" />
+    <Property Name="status" Type="Boolean" />
+    <Property Name="category_id" Type="Int32" />
+    <NavigationProperty Name="Category" Relationship="Self.FK__Reward__category__3E52440B" FromRole="Reward" ToRole="Category" />
+    <NavigationProperty Name="Redemptions" Relationship="Self.FK__Redemptio__rewar__3D5E1FD2" FromRole="Reward" ToRole="Redemption" />
+    <NavigationProperty Name="WishlistItems" Relationship="dataTranGiaModel.FK__WishlistI__Rewar__3C34F16F" FromRole="Reward" ToRole="WishlistItem" />
+  </EntityType>
+  <Association Name="FK__Account__Branch__38996AB5">
+    <End Role="Branch" Type="Self.Branch" Multiplicity="0..1" />
+    <End Role="Account" Type="Self.Account" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Branch">
+        <PropertyRef Name="Branch_id" />
+      </Principal>
+      <Dependent Role="Account">
+        <PropertyRef Name="Branch" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__Blog__blog_acc_i__398D8EEE">
+    <End Role="Account" Type="Self.Account" Multiplicity="1" />
+    <End Role="Blog" Type="Self.Blog" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Account">
+        <PropertyRef Name="acc_id" />
+      </Principal>
+      <Dependent Role="Blog">
+        <PropertyRef Name="blog_acc_id" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__PointHist__his_a__3B75D760">
+    <End Role="Account" Type="Self.Account" Multiplicity="0..1" />
+    <End Role="PointHistory" Type="Self.PointHistory" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Account">
+        <PropertyRef Name="acc_id" />
+      </Principal>
+      <Dependent Role="PointHistory">
+        <PropertyRef Name="his_acc_id" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__Redemptio__red_a__3C69FB99">
+    <End Role="Account" Type="Self.Account" Multiplicity="0..1" />
+    <End Role="Redemption" Type="Self.Redemption" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Account">
+        <PropertyRef Name="acc_id" />
+      </Principal>
+      <Dependent Role="Redemption">
+        <PropertyRef Name="red_acc_id" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__image__blog_id__3A81B327">
+    <End Role="Blog" Type="Self.Blog" Multiplicity="0..1" />
+    <End Role="image" Type="Self.image" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Blog">
+        <PropertyRef Name="blog_id" />
+      </Principal>
+      <Dependent Role="image">
+        <PropertyRef Name="blog_id" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__Reward__category__3E52440B">
+    <End Role="Category" Type="Self.Category" Multiplicity="0..1" />
+    <End Role="Reward" Type="Self.Reward" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Category">
+        <PropertyRef Name="category_id" />
+      </Principal>
+      <Dependent Role="Reward">
+        <PropertyRef Name="category_id" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__Redemptio__rewar__3D5E1FD2">
+    <End Role="Reward" Type="Self.Reward" Multiplicity="0..1" />
+    <End Role="Redemption" Type="Self.Redemption" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Reward">
+        <PropertyRef Name="reward_id" />
+      </Principal>
+      <Dependent Role="Redemption">
+        <PropertyRef Name="reward_id" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <EntityContainer Name="dataTranGiaEntities" annotation:LazyLoadingEnabled="true">
+    <EntitySet Name="Accounts" EntityType="Self.Account" />
+    <EntitySet Name="Blogs" EntityType="Self.Blog" />
+    <EntitySet Name="Branches" EntityType="Self.Branch" />
+    <EntitySet Name="Categories" EntityType="Self.Category" />
+    <EntitySet Name="images" EntityType="Self.image" />
+    <EntitySet Name="PointHistories" EntityType="Self.PointHistory" />
+    <EntitySet Name="Redemptions" EntityType="Self.Redemption" />
+    <EntitySet Name="Rewards" EntityType="Self.Reward" />
+    <AssociationSet Name="FK__Account__Branch__38996AB5" Association="Self.FK__Account__Branch__38996AB5">
+      <End Role="Branch" EntitySet="Branches" />
+      <End Role="Account" EntitySet="Accounts" />
+    </AssociationSet>
+    <AssociationSet Name="FK__Blog__blog_acc_i__398D8EEE" Association="Self.FK__Blog__blog_acc_i__398D8EEE">
+      <End Role="Account" EntitySet="Accounts" />
+      <End Role="Blog" EntitySet="Blogs" />
+    </AssociationSet>
+    <AssociationSet Name="FK__PointHist__his_a__3B75D760" Association="Self.FK__PointHist__his_a__3B75D760">
+      <End Role="Account" EntitySet="Accounts" />
+      <End Role="PointHistory" EntitySet="PointHistories" />
+    </AssociationSet>
+    <AssociationSet Name="FK__Redemptio__red_a__3C69FB99" Association="Self.FK__Redemptio__red_a__3C69FB99">
+      <End Role="Account" EntitySet="Accounts" />
+      <End Role="Redemption" EntitySet="Redemptions" />
+    </AssociationSet>
+    <AssociationSet Name="FK__image__blog_id__3A81B327" Association="Self.FK__image__blog_id__3A81B327">
+      <End Role="Blog" EntitySet="Blogs" />
+      <End Role="image" EntitySet="images" />
+    </AssociationSet>
+    <AssociationSet Name="FK__Reward__category__3E52440B" Association="Self.FK__Reward__category__3E52440B">
+      <End Role="Category" EntitySet="Categories" />
+      <End Role="Reward" EntitySet="Rewards" />
+    </AssociationSet>
+    <AssociationSet Name="FK__Redemptio__rewar__3D5E1FD2" Association="Self.FK__Redemptio__rewar__3D5E1FD2">
+      <End Role="Reward" EntitySet="Rewards" />
+      <End Role="Redemption" EntitySet="Redemptions" />
+    </AssociationSet>
+    <EntitySet Name="vw_RedemptionDetails" EntityType="dataTranGiaModel.vw_RedemptionDetails" />
+    <FunctionImport Name="UpdateTempProductCategory" />
+    <EntitySet Name="TempProductCategories" EntityType="dataTranGiaModel.TempProductCategory" />
+    <EntitySet Name="WishlistItems" EntityType="dataTranGiaModel.WishlistItem" />
+    <AssociationSet Name="FK__WishlistI__AccId__3D2915A8" Association="dataTranGiaModel.FK__WishlistI__AccId__3D2915A8">
+      <End Role="Account" EntitySet="Accounts" />
+      <End Role="WishlistItem" EntitySet="WishlistItems" />
+    </AssociationSet>
+    <AssociationSet Name="FK__WishlistI__Rewar__3C34F16F" Association="dataTranGiaModel.FK__WishlistI__Rewar__3C34F16F">
+      <End Role="Reward" EntitySet="Rewards" />
+      <End Role="WishlistItem" EntitySet="WishlistItems" />
+    </AssociationSet>
+    <EntitySet Name="vw_HistoryPointChange" EntityType="dataTranGiaModel.vw_HistoryPointChange" />
+    <FunctionImport Name="GetTopRewardsByMonth">
+      <Parameter Name="Month" Mode="In" Type="Int32" />
+      <Parameter Name="Year" Mode="In" Type="Int32" />
+    </FunctionImport>
+    <FunctionImport Name="GetTopRewardsByYear">
+      <Parameter Name="Year" Mode="In" Type="Int32" />
+    </FunctionImport>
+  </EntityContainer>
+  <EntityType Name="vw_RedemptionDetails">
+    <Key>
+      <PropertyRef Name="redemption_id" />
+    </Key>
+    <Property Name="redemption_id" Type="Int32" Nullable="false" />
+    <Property Name="phone" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
+    <Property Name="fullname" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
+    <Property Name="points_required" Type="Double" />
+    <Property Name="reward_name" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
+    <Property Name="red_status" Type="Boolean" />
+  </EntityType>
+  <EntityType Name="TempProductCategory">
+    <Key>
+      <PropertyRef Name="category_id" />
+    </Key>
+    <Property Name="category_id" Type="Int32" Nullable="false" />
+    <Property Name="category_name" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
+    <Property Name="ProductCount" Type="Int32" />
+  </EntityType>
+  <EntityType Name="WishlistItem">
+    <Key>
+      <PropertyRef Name="WishlistItemId" />
+    </Key>
+    <Property Name="WishlistItemId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="RewardId" Type="Int32" />
+    <Property Name="Quantity" Type="Double" />
+    <Property Name="AccId" Type="Int32" />
+    <NavigationProperty Name="Account" Relationship="dataTranGiaModel.FK__WishlistI__AccId__3D2915A8" FromRole="WishlistItem" ToRole="Account" />
+    <NavigationProperty Name="Reward" Relationship="dataTranGiaModel.FK__WishlistI__Rewar__3C34F16F" FromRole="WishlistItem" ToRole="Reward" />
+    <Property Name="status" Type="Boolean" />
+  </EntityType>
+  <Association Name="FK__WishlistI__AccId__3D2915A8">
+    <End Type="dataTranGiaModel.Account" Role="Account" Multiplicity="0..1" />
+    <End Type="dataTranGiaModel.WishlistItem" Role="WishlistItem" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Account">
+        <PropertyRef Name="acc_id" />
+      </Principal>
+      <Dependent Role="WishlistItem">
+        <PropertyRef Name="AccId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__WishlistI__Rewar__3C34F16F">
+    <End Type="dataTranGiaModel.Reward" Role="Reward" Multiplicity="0..1" />
+    <End Type="dataTranGiaModel.WishlistItem" Role="WishlistItem" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Reward">
+        <PropertyRef Name="reward_id" />
+      </Principal>
+      <Dependent Role="WishlistItem">
+        <PropertyRef Name="RewardId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <EntityType Name="vw_HistoryPointChange">
+    <Key>
+      <PropertyRef Name="his_id" />
+      <PropertyRef Name="acc_id" />
+    </Key>
+    <Property Name="his_id" Type="Int32" Nullable="false" />
+    <Property Name="phone" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
+    <Property Name="fullname" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
+    <Property Name="his_date" Type="DateTime" Precision="3" />
+    <Property Name="his_note" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
+    <Property Name="his_pointchange" Type="Double" />
+    <Property Name="acc_id" Type="Int32" Nullable="false" />
+  </EntityType>
+</Schema>

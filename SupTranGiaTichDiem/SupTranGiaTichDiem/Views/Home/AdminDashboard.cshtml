@@ -1,0 +1,17 @@
+﻿
+@{
+    ViewBag.Title = "AdminDashboard";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>AdminDashboard</h2>
+
+@if ((bool)ViewBag.IsAdmin)
+{
+    <p>Welcome Admin! You have full access.</p>
+    <a href="@Url.Action("RestrictedAction", "Home")">Go to Restricted Action</a>
+}
+else
+{
+    <p>Welcome Staff! Your access is limited.</p>
+}

@@ -1,0 +1,44 @@
+﻿@model List<SupTranGiaTichDiem.Models.Reward>
+
+@{
+    ViewBag.Title = "Sản phẩm theo loại";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div>
+    <h1 class="mb-4"><span class="badge badge-warning">Sản phẩm theo loại</span></h1>
+    <div class="row g-4 justify-content-center">
+        @foreach (var item in Model)
+        {
+            <div class="col-md-6 col-lg-6 col-xl-4">
+                <div class="post">
+                    <div class="post-img" style="background-image: var(--post-img-hovered-overlay), url('@Url.Content("~/img/" + item.reward_image)');"></div>
+                    <a href="#" class="post-link">
+                        <div class="post-img-hovered" style="background-image: var(--post-img-hovered-overlay), url('@Url.Content("~/img/" + item.reward_image)');"></div>
+                    </a>
+                    <div class="post-info">
+                        <div class="post-about">
+                            <a href="#" class="post-cat" style="width:80px">@item.Category.category_name</a>
+                            <div class="post-time">
+                                <div class="badge bg-warning" style="font-size: 15px;">@item.points_required điểm </div>
+                            </div>
+                        </div>
+                        <h1 class="heading">@item.reward_name</h1>
+                        <p class="post-desc">
+                            <button type="button" class="btn btn-outline-warning" data-mdb-ripple-init
+                                    data-mdb-ripple-color="dark">
+                                Đổi thưởng
+                            </button>
+                            <button type="button" class="btn btn-warning" data-mdb-ripple-init>Xem chi tiết</button>
+                        </p>
+                        <div class="post-creator">
+                            <span class="text-light">
+                                Ngày tạo: @(item.reward_date.HasValue ? item.reward_date.Value.ToString("dd/MM/yyyy") : "Không xác định")
+                            </span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        }
+    </div>
+</div>

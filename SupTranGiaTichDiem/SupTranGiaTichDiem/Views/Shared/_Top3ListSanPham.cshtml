@@ -1,0 +1,24 @@
+﻿@model List<SupTranGiaTichDiem.Models.Reward>
+
+@foreach (var item in Model)
+{
+    <a  href="@Url.Action("ChiTietSanPham", "Home", new { Reward_id = item.reward_id })" class="d-flex align-items-center justify-content-start mb-3 bg-light p-2" data-points="@item.points_required">
+      
+            <div class="rounded me-4" style="width: 100px; height: 100px;">
+                <img src="@Url.Content("~/img/" + item.reward_image)" class="img-fluid rounded-2" alt="">
+            </div>
+            <div class="text-dark">
+                <h5 class="mb-2 text-warning">
+                 
+                    <marquee direction="right" >   @item.reward_name</marquee>
+                </h5>
+                <div class="d-flex mb-2">
+                    @item.Category.category_name
+                </div>
+                <div class="d-flex mb-2">
+                    <h5 class="fw-bold me-2">@item.points_required Điểm</h5>
+                </div>
+            </div>
+       
+    </a>
+}

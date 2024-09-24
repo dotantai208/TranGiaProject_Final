@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+ <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <!-- Diagram content (shape and connector positions) -->
+    <edmx:Diagrams>
+      <Diagram DiagramId="272e949085fe4d57b954533d1e178558" Name="Diagram1" ZoomLevel="84">
+        <EntityTypeShape EntityType="dataTranGiaModel.Account" Width="1.5" PointX="3" PointY="3.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="dataTranGiaModel.Blog" Width="1.5" PointX="5.25" PointY="2.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="dataTranGiaModel.Branch" Width="1.5" PointX="0.75" PointY="4.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="dataTranGiaModel.Category" Width="1.5" PointX="3.75" PointY="9.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="dataTranGiaModel.image" Width="1.5" PointX="7.5" PointY="3" IsExpanded="true" />
+        <EntityTypeShape EntityType="dataTranGiaModel.PointHistory" Width="1.5" PointX="5.25" PointY="5.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="dataTranGiaModel.Redemption" Width="1.5" PointX="8.125" PointY="6" IsExpanded="true" />
+        <EntityTypeShape EntityType="dataTranGiaModel.Reward" Width="1.5" PointX="6.125" PointY="8.375" IsExpanded="true" />
+        <AssociationConnector Association="dataTranGiaModel.FK__Account__Branch__38996AB5" ManuallyRouted="false" />
+        <AssociationConnector Association="dataTranGiaModel.FK__Blog__blog_acc_i__398D8EEE" ManuallyRouted="false" />
+        <AssociationConnector Association="dataTranGiaModel.FK__PointHist__his_a__3B75D760" ManuallyRouted="false" />
+        <AssociationConnector Association="dataTranGiaModel.FK__Redemptio__red_a__3C69FB99" ManuallyRouted="false" />
+        <AssociationConnector Association="dataTranGiaModel.FK__image__blog_id__3A81B327" ManuallyRouted="false" />
+        <AssociationConnector Association="dataTranGiaModel.FK__Reward__category__3E52440B" ManuallyRouted="false" />
+        <AssociationConnector Association="dataTranGiaModel.FK__Redemptio__rewar__3D5E1FD2" ManuallyRouted="false" />
+        <EntityTypeShape EntityType="dataTranGiaModel.vw_RedemptionDetails" Width="2.625" PointX="0.875" PointY="8.625" />
+        <EntityTypeShape EntityType="dataTranGiaModel.TempProductCategory" Width="1.5" PointX="0.875" PointY="1.125" />
+        <EntityTypeShape EntityType="dataTranGiaModel.WishlistItem" Width="1.5" PointX="10.375" PointY="6.375" />
+        <AssociationConnector Association="dataTranGiaModel.FK__WishlistI__AccId__3D2915A8" />
+        <AssociationConnector Association="dataTranGiaModel.FK__WishlistI__Rewar__3C34F16F" />
+        <EntityTypeShape EntityType="dataTranGiaModel.vw_HistoryPointChange" Width="1.5" PointX="8.375" PointY="9.75" />
+        </Diagram>
+    </edmx:Diagrams>
+  </edmx:Designer>
+</edmx:Edmx>

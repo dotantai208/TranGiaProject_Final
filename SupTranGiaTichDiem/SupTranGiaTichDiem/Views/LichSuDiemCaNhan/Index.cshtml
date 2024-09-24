@@ -1,0 +1,32 @@
+﻿@model IEnumerable<SupTranGiaTichDiem.Models.PointHistory>
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+
+
+<h2>Lịch Sử Điểm Cá Nhân</h2>
+
+<table class="table table-bordered border-black text-black"style="font-size:larger">
+    <thead  class="table-dark">
+        <tr class="text-light">
+            <th>Ngày </th>
+           
+            <th>Thay đổi điểm</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr class="table-warning text-dark" >
+                
+                <td>@item.his_note</td>
+                <td>
+                    <span class="badge badge-success rounded-pill d-inline"> +@item.his_pointchange Điểm</span>
+                 
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>

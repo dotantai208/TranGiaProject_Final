@@ -1,0 +1,495 @@
+﻿@model IEnumerable<SupTranGiaTichDiem.Models.Account>
+
+@{
+    ViewBag.Title = "Doi Thuong";
+    Layout = "~/Areas/Admin/Views/Shared/Layout.cshtml";
+    ViewBag.active = 4;
+}
+
+<!-- Layout wrapper -->
+<!-- Content wrapper -->
+<div class="content-wrapper">
+
+    <div class="container-xxl flex-grow-1 container-p-y">
+        <div class="row pb-3">
+            <div class="d-flex mb-2 text-light">
+                <div class="p-2">
+                    <button type="submit" class="btn btn-warning" data-bs-toggle="modal"
+                            data-bs-target="#modalCenter">
+                        <span class="tf-icons bx bx-plus-medical"></span>&nbsp;Thêm nhân viên
+                    </button>
+                </div>
+
+
+                <div class="ms-auto p-2">
+                    <select class="form-select" aria-label="Default select example">
+                        <option selected>Mặc định </option>
+                        <option value="1">từ thấp đến cao</option>
+                        <option value="2">từ cao đến thấp </option>
+
+                    </select>
+                </div>
+            </div>
+        </div>
+
+
+        <div class="card">
+
+            <div class="pt-4 card-header col-md-4">
+                <div class="input-group">
+                    <input type="search" class="form-control " placeholder="Search" aria-label="Search" aria-describedby="search-addon" />
+                    <button type="button" class="btn btn-outline-primary" data-mdb-ripple-init>Tìm kiếm</button>
+                </div>
+            </div>
+            <div class="table-responsive text-nowrap card-body">
+                <table class="table">
+                    <thead>
+                        <tr>
+                            <th>ID</th>
+                            <th>Số điện thoại</th>
+                            <th>Họ và tên</th>
+                            <th>Email</th>
+                            <th>Trạng thái</th>
+                            <th>Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody class="table-border-bottom-0">
+
+                        @foreach (var item in Model)
+                        {
+
+                            <tr>
+                                <td><strong>@item.acc_id</strong></td>
+                                <td>@item.phone</td>
+                                <td>
+                                    @item.fullname
+                                </td>
+                                <td>
+                                    @item.Email
+                                </td>
+                                <td>
+                                    @if (item.status == true)
+                                    {
+
+
+                                        <span class="badge bg-label-success me-1">Đang hoạt động</span>
+                                    }
+                                    else
+                                    {
+                                        <span class="badge bg-label-danger me-1">Dừng hoạt động</span>
+                                    }
+                                </td>
+                                <td>
+
+
+
+                                    <button type="button" class="btn btn-icon btn-warning open-account-modal" data-id="@item.acc_id">
+                                        <span class="tf-icons"><i class='bx bx-edit'></i></span>
+                                    </button>
+
+                                    <button type="button" class="btn  btn-icon btn-danger open-account-modal-delete" onclick="xoa()" data-id="@item.acc_id">
+                                        <span class="tf-icons"><i class='bx bx-trash'></i></span>
+                                    </button>
+                                </td>
+                            </tr>
+                        }
+
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+        <div class="demo-inline-spacing ">
+            <!-- Basic Pagination -->
+            <nav aria-label="Page navigation ">
+                <ul class="pagination justify-content-center align-items-center">
+                    <li class="page-item first">
+                        <a class="page-link" href="javascript:void(0);">
+                            <i class="tf-icon bx bx-chevrons-left"></i>
+                        </a>
+                    </li>
+                    <li class="page-item prev">
+                        <a class="page-link" href="javascript:void(0);">
+                            <i class="tf-icon bx bx-chevron-left"></i>
+                        </a>
+                    </li>
+                    <li class="page-item">
+                        <a class="page-link" href="javascript:void(0);">1</a>
+                    </li>
+                    <li class="page-item">
+                        <a class="page-link" href="javascript:void(0);">2</a>
+                    </li>
+                    <li class="page-item active ">
+                        <a class="page-link bg-warning" href="javascript:void(0);">3</a>
+                    </li>
+                    <li class="page-item">
+                        <a class="page-link" href="javascript:void(0);">4</a>
+                    </li>
+                    <li class="page-item">
+                        <a class="page-link" href="javascript:void(0);">5</a>
+                    </li>
+                    <li class="page-item next">
+                        <a class="page-link" href="javascript:void(0);">
+                            <i class="tf-icon bx bx-chevron-right"></i>
+                        </a>
+                    </li>
+                    <li class="page-item last">
+                        <a class="page-link" href="javascript:void(0);">
+                            <i class="tf-icon bx bx-chevrons-right"></i>
+                        </a>
+                    </li>
+                </ul>
+            </nav>
+            <!--/ Basic Pagination -->
+        </div>
+        <!--/ Responsive Table -->
+    </div>
+
+    <!--   Tao tai Khoan            -->
+    <div class="modal fade" id="modalCenter" tabindex="0" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered " role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="modalCenterTitle">Thêm nhân viên</h5>
+                    <button type="button"
+                            class="btn-close"
+                            data-bs-dismiss="modal"
+                            aria-label="Close"></button>
+                </div>
+                @using (Html.BeginForm("createNV", "NhanVien", FormMethod.Post))
+                {
+                    @Html.AntiForgeryToken()
+                    <div class="modal-body">
+                        <div class="row">
+
+
+                            <div class="col-12 mb-3">
+                                <label for="nameWithTitle" class="form-label">Số điện thoại</label>
+                                <input type="text"
+                                       id="editPhone"
+                                       name="phone"
+                                       pattern="^\d{10,11}$"
+                                       class="form-control"
+                                       placeholder="Nhập số điện thoại"
+                                       required />
+                            </div>
+                            <div class="col-12 mb-3">
+                                <div class="row ">
+                                    <label for="nameWithTitle" class="form-label">Mật khẩu</label>
+                                    <div class="col-10">
+                                        <input type="password"
+                                               id="password"
+                                               name="password"
+                                               class="form-control"
+                                               placeholder="Nhập mật khẩu"
+                                               minlength="6"
+                                               maxlength="20"
+                                               required>
+                                    </div>
+                                    <div class="col-2">
+                                        <button class="btn btn-outline-secondary" type="button" id="togglePassword">
+                                            <i class="bi bi-eye"></i>
+                                        </button>
+                                    </div>
+                                </div>
+
+                            </div>
+                            <div class="col-12 mb-3">
+                                <label for="nameWithTitle" class="form-label">Họ và tên</label>
+                                <input type="text"
+                                       id="editFullName"
+                                       name="fullname"
+                                       class="form-control"
+                                       placeholder="Nhập Họ và tên"
+                                       required />
+                            </div>
+                        </div>
+                        <div class="row g-2">
+                            <div class="col mb-0">
+                                <label for="emailWithTitle" class="form-label">Email</label>
+                                <input type="email"
+                                       id="editEmail"
+                                       class="form-control"
+                                       name="Email"
+                                       placeholder="xxxx@xxx.xx"
+                                       required />
+                            </div>
+                            <div class="col mb-0">
+                                <label for="dobWithTitle" class="form-label">Ngày sinh</label>
+                                <input type="date"
+                                       id="editDate"
+                                       name="birthday"
+                                       class="form-control"
+                                       placeholder=""
+                                       required
+                                       max="@DateTime.Now.ToString("yyyy-MM-dd")" />
+                            </div>
+
+                        </div>
+                        <div class="col mt-3">
+                            <h6> Vai trò</h6>
+                            <div class="form-check form-check-inline">
+                                <input class="form-check-input" type="radio" name="role" id="editRole" value="NV" checked />
+                                <label class="form-check-label" for="inlineRadio1">Nhân viên</label>
+                            </div>
+
+                            <div class="form-check form-check-inline">
+                                <input class="form-check-input" type="radio" name="role" id="editRole" value="AD" />
+                                <label class="form-check-label" for="inlineRadio2">Admin</label>
+                            </div>
+
+
+                        </div>
+                        <div class="mt-3">
+                            <label for="language" class="form-label">Khu vực</label>
+                            <select id="editBranch" name="Branch" class="select2 form-select">
+                                <option value="" disabled>Chon khu vực</option>
+                                @foreach (var item in ViewBag.branch)
+                                {
+                                    <option value="@item.Branch_id">@item.Branch_Name</option>
+
+                                }
+
+
+
+                            </select>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal">
+                            Thoát
+                        </button>
+                        <button type="submit" class="btn btn-warning create-btn">Thêm </button>
+                    </div>
+                }
+            </div>
+        </div>
+    </div>
+
+
+    <!-- Cập nhật tài khoản -->
+    <div class="modal fade" id="modalUpdate" tabindex="-1" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="modalUpdatetitle">Cập nhật nhân viên</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                @using (Html.BeginForm("UpdateNhanVien", "NhanVien", FormMethod.Post))
+                {
+                    @Html.AntiForgeryToken()
+                    <div class="modal-body">
+                        <input name="acc_id" type="hidden" id="editIDACC" />
+                        <div class="col-12 mb-3">
+
+                            <label for="modalPhone" class="form-label">Số điện thoại</label>
+                            <input type="text" id="modalPhone" name="phone" class="form-control" placeholder="Nhập số điện thoại" readonly />
+
+                        </div>
+                        <div class="col-12 mb-3">
+                            <label for="modalFullName" class="form-label">Họ và tên</label>
+                            <input type="text" id="modalFullName" name="fullname" class="form-control" placeholder="Nhập họ và tên" required />
+                        </div>
+                        <div class="col mb-0">
+                            <label for="editEmailAcc" class="form-label">Email</label>
+                            <input type="email" id="editEmailAcc" class="form-control" name="Email" placeholder="xxxx@xxx.xx" readonly />
+                        </div>
+                        <div class="row g-2">
+                            <div class="col mb-0">
+                                <label for="editDateAcc" class="form-label">Ngày sinh</label>
+                                <input type="date" id="editDateAcc" name="birthday" class="form-control" max="@DateTime.Now.ToString("yyyy-MM-dd")" />
+                            </div>
+                        </div>
+                        <div class="col mt-3">
+                            <h6>Vai trò</h6>
+                            <div class="form-check form-check-inline">
+                                <input class="form-check-input" type="radio" name="role" id="editRole" value="NV" />
+                                <label class="form-check-label" for="editRoleNV">Nhân viên</label>
+                            </div>
+                            <div class="form-check form-check-inline">
+                                <input class="form-check-input" type="radio" name="role" id="editRole" value="AD" />
+                                <label class="form-check-label" for="editRoleAD">Admin</label>
+                            </div>
+
+                        </div>
+                        <div class="mt-3">
+                            <label for="editBranchX" class="form-label">Khu vực</label>
+                            <select id="editBranchX" name="Branch" class="select2 form-select">
+                                <option disabled>Chọn khu vực</option>
+                                @foreach (var item in ViewBag.branch)
+                                {
+                                    <option value="@item.Branch_id">@item.Branch_Name</option>
+                                }
+                            </select>
+                        </div>
+
+
+
+
+                        <div class="form-check form-check-inline">
+                            <input class="form-check-input" type="radio" name="status" id="editStatus" value="true" />
+                            <label class="form-check-label" for="editRoleNV">Hoạt động</label>
+                        </div>
+                        <div class="form-check form-check-inline">
+                            <input class="form-check-input" type="radio" name="status" id="editStatus" value="false" />
+                            <label class="form-check-label" for="editRoleNV">Tạm dừng</label>
+                        </div>
+
+                        <!--
+                        <div class="mt-3">
+                            <label class="form-check-label" for="editStatus">Trạng thái</label>
+                            <div class="form-check form-switch mt-2">
+                                <input class="form-check-input" type="checkbox" name="status" id="editStatus"/>
+                            </div>
+                        </div>
+                             -->
+
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal">Thoát</button>
+                        <button type="submit" class="btn btn-warning">Cập nhật</button>
+                    </div>
+                }
+
+            </div>
+        </div>
+    </div>
+
+
+
+    <!-- Xóa tài khoản -->
+    <div class="modal fade" id="modalDelete" tabindex="-1" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="modalUpdatetitle">Xóa Nhân Viên</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                @using (Html.BeginForm("DeleteNhanVien", "nhanVien", FormMethod.Post))
+                {
+                    @Html.AntiForgeryToken()
+                    <div class="modal-body">
+                        <input name="acc_id" type="hidden" id="editIDACC2" />
+
+                        <div>Bạn có chắc muốn xóa nhân viên: <span class="text-danger" id="tenNhanVien"></span> !!</div>
+
+
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal">Thoát</button>
+                        <button type="submit" class="btn btn-danger">Xóa</button>
+                    </div>
+                }
+
+            </div>
+        </div>
+    </div>
+
+
+    <!-- / Layout page -->
+</div>
+
+
+
+<!-- Overlay -->
+<div class="layout-overlay layout-menu-toggle"></div>
+
+
+@if (!string.IsNullOrEmpty(Request.QueryString["message"]))
+{
+    <div class="alert alert-info">
+        @Request.QueryString["message"]
+    </div>
+}
+
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<script type="text/javascript">
+    $(document).ready(function () {
+        $('.open-account-modal').click(function () {
+            var id = $(this).data('id');
+            $.ajax({
+                url: '@Url.Action("GetNhanVien", "NhanVien")',
+                type: 'GET',
+                data: { id: id },
+                success: function (data) {
+                    $('#editIDACC').val(data.ID);
+                    $('#modalPhone').val(data.Phone);
+                    $('#modalFullName').val(data.FullName);
+                    $('#editEmailAcc').val(data.EmailAcc);
+                    $('#editDateAcc').val(data.Birthday);
+                    $('#editRole[value="' + data.Role + '"]').prop('checked', true);
+                    $('#editBranchX').val(data.BranchAcc);
+
+                     
+                   // $('#editStatus').prop('checked', true);
+                    // Đặt checked = true
+                   // $('#editStatus').prop('checked', true);
+                   // $('#editStatus').val(true);
+                    // Đặt checked = false
+                  //  $('#editStatus').prop('checked', false);
+                   // $('#editStatus').val(false);
+                    $('#editStatus[value = "' + data.Status + '"]').prop('checked', true);
+                    $('#modalUpdate').modal('show');
+                },
+                error: function () {
+                    alert('Có lỗi xảy ra.');
+                }
+            });
+        });
+    });
+
+</script>
+
+
+<script type="text/javascript">
+$(document).ready(function () {
+    $('.open-account-modal-delete').click(function () {
+        var id = $(this).data('id');
+
+        $.ajax({
+            url: '@Url.Action("GetKhachHang", "KhachHang")',
+            type: 'GET',
+            data: { id: id },
+            success: function (data) {
+
+
+                $('#editIDACC2').val(data.ID);
+                $('#tenNhanVien').text(data.FullName);
+
+               // $('#editStatus').prop('checked', true);
+                // Đặt checked = true
+               // $('#editStatus').prop('checked', true);
+               // $('#editStatus').val(true);
+                // Đặt checked = false
+              //  $('#editStatus').prop('checked', false);
+                // $('#editStatus').val(false);
+
+                $('#modalDelete').modal('show');
+            },
+            error: function () {
+                alert('Có lỗi xảy ra.');
+            }
+        });
+    });
+
+});
+</script>
+
+
+
+<!--Hiện mật khẩu-->
+<script>
+    document.getElementById('togglePassword').addEventListener('click', function (e) {
+        const passwordInput = document.getElementById('password');
+        const icon = this.querySelector('i');
+
+        // Toggle the type attribute
+        const type = passwordInput.getAttribute('type') === 'password' ? 'text' : 'password';
+        passwordInput.setAttribute('type', type);
+
+        // Toggle the icon
+        icon.classList.toggle('bi-eye');
+        icon.classList.toggle('bi-eye-slash');
+    });
+</script>
